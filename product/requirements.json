@@ -15,8 +15,9 @@
     "overall_dimensions_mm": {
       "value": {
         "length": 80,
-        "width": 40,
-        "height": 25
+        "width": 46,
+        "height": 25,
+        "body_width": 40
       },
       "source": "user"
     },

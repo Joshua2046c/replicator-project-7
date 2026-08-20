@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 21,
-  "sourceHash": "14f1d999a8265bdc82bd8f9a09abbd4bcbf631d8e887ff2394064af3b198ce5a",
+  "buildNumber": 33,
+  "sourceHash": "a86854870f066dc2e5edae1117246859e92feca7bb17d1875f3abd2d8857069e",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "6283b16cbc40f143a0e2c112779fa2da697d39cf0712e8b009556402dc793f7a"
+          "sha256": "59c0929ea25a992ce74d4d12b13cf00a501d305b41e0e7e573281e36687b72d4"
         }
       ],
       "dependencies": []
@@ -28,7 +28,7 @@
           "target": "top_lid",
           "order": 0,
           "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
-          "sha256": "6d65cf023046b60f9f2316789782b937b40f0c2743886a66c8adcda73b6f4ffe"
+          "sha256": "017dc143c3ced759e1511c513c5b983dca16e4c7fffcbd913cc61e082259403f"
         }
       ],
       "dependencies": []
@@ -42,7 +42,7 @@
           "target": "hinge_pin",
           "order": 0,
           "path": "design/capsule_box/source/parts/hinge_pin/000-hinge_pin.py",
-          "sha256": "77ffeaef5c8b9aa879c32ec1e1d947eafc205a3bce4acd7ef17d780d58b4127b"
+          "sha256": "739a3a0d12371e11c08c6496f0f6e4bd805cda6aa68651960722242fa2a8a1fd"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "fbea746e5940901834d268a7e3ede8803422ad2653fc5a6142ed2970c4268956",
+      "shapeHash": "7f5b46925aa7a9355ec65265bcc6d5be0d5c05c6f64252ada40a322be8d526ae",
       "transform": {
         "positionMm": [
           0,
@@ -80,12 +80,12 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "ed02f88ca226c6a69137afa35c3b9cd438627416c5f6afb5e04d1193bdf8f04c",
+      "shapeHash": "e47b0867e1dc99dc5aafb358e1fb53cc8827ad40bb49c8c041e8122866874b73",
       "transform": {
         "positionMm": [
           0,
-          22.814,
-          28.975
+          30.866,
+          34.613
         ],
         "rotationDeg": [
           -110,
@@ -106,11 +106,11 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "045d0411a5ccacf4d649c6af5932d01d04d422c4950f46ac8ddee43d150d1f5c",
+      "shapeHash": "78d7577a74d1f24d62baf6453ad1683a40cbadbe6bcd3a3a0bf8a32f40949230",
       "transform": {
         "positionMm": [
           0,
-          17,
+          23,
           13
         ],
         "rotationDeg": [
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-20T13:39:25.882Z",
+  "updatedAt": "2026-08-20T14:12:56.276Z",
   "parameters": {
     "bottom_half": {
       "overall_length": 80,
@@ -147,12 +147,18 @@
       "outer_width": 40,
       "bottom_height": 13,
       "central_web": 4,
-      "magnet_y_from_center": 14,
+      "magnet_y_from_center": 16,
       "hinge_knuckle_diameter": 6,
       "hinge_knuckle_width": 10,
       "hinge_knuckle_spacing": 25,
       "magnet_x_spacing": 10,
-      "hinge_hole_clearance": 0.3
+      "hinge_hole_clearance": 0.3,
+      "compact_side_knuckle_width": 8,
+      "compact_center_knuckle_width": 14.4,
+      "hinge_axial_gap": 0.3,
+      "hinge_axis_y": 23,
+      "hinge_neck_depth": 5,
+      "hinge_neck_height": 3
     },
     "top_lid": {
       "overall_length": 80,
@@ -170,17 +176,23 @@
       "outer_width": 40,
       "inner_clearance": 0.3,
       "relief_depth": 3,
-      "magnet_y_from_center": 14,
+      "magnet_y_from_center": 16,
       "hinge_knuckle_diameter": 6,
       "hinge_knuckle_width": 10,
       "hinge_knuckle_spacing": 25,
       "magnet_x_spacing": 10,
       "hinge_hole_clearance": 0.3,
-      "hinge_center_width": 39.4
+      "hinge_center_width": 39.4,
+      "compact_side_knuckle_width": 8,
+      "compact_center_knuckle_width": 14.4,
+      "hinge_axial_gap": 0.3,
+      "hinge_axis_y": 23,
+      "hinge_neck_depth": 5,
+      "hinge_neck_height": 3
     },
     "hinge_pin": {
       "hinge_pin_diameter": 3,
-      "hinge_pin_length": 61
+      "hinge_pin_length": 29.4
     }
   }
 }

@@ -1,8 +1,8 @@
-# Cut-stock hinge pin made from plain metal rod
+# Cut-stock hinge pin for the compact three-knuckle hinge
 from build123d import *
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
-hinge_pin_length = param("hinge_pin_length", 61.0)
+hinge_pin_length = param("hinge_pin_length", 29.4)
 
 pin = Cylinder(
     hinge_pin_diameter / 2,
