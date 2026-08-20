@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "buildNumber": 21,
+  "sourceHash": "14f1d999a8265bdc82bd8f9a09abbd4bcbf631d8e887ff2394064af3b198ce5a",
+  "units": "mm",
+  "coordinateFrame": "replicator-world-z-up",
+  "targets": [
+    {
+      "id": "bottom_half",
+      "label": "bottom_half",
+      "cells": [
+        {
+          "id": "bottom_half",
+          "target": "bottom_half",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
+          "sha256": "6283b16cbc40f143a0e2c112779fa2da697d39cf0712e8b009556402dc793f7a"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "top_lid",
+      "label": "top_lid",
+      "cells": [
+        {
+          "id": "top_lid",
+          "target": "top_lid",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
+          "sha256": "6d65cf023046b60f9f2316789782b937b40f0c2743886a66c8adcda73b6f4ffe"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "hinge_pin",
+      "label": "hinge_pin",
+      "cells": [
+        {
+          "id": "hinge_pin",
+          "target": "hinge_pin",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/hinge_pin/000-hinge_pin.py",
+          "sha256": "77ffeaef5c8b9aa879c32ec1e1d947eafc205a3bce4acd7ef17d780d58b4127b"
+        }
+      ],
+      "dependencies": []
+    }
+  ],
+  "objects": [
+    {
+      "id": "bottom_shell",
+      "target": "bottom_half",
+      "label": "Bottom capsule half",
+      "kind": "generated",
+      "shapeHash": "fbea746e5940901834d268a7e3ede8803422ad2653fc5a6142ed2970c4268956",
+      "transform": {
+        "positionMm": [
+          0,
+          0,
+          0
+        ],
+        "rotationDeg": [
+          0,
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    },
+    {
+      "id": "top_lid",
+      "target": "top_lid",
+      "label": "Top capsule lid",
+      "kind": "generated",
+      "shapeHash": "ed02f88ca226c6a69137afa35c3b9cd438627416c5f6afb5e04d1193bdf8f04c",
+      "transform": {
+        "positionMm": [
+          0,
+          22.814,
+          28.975
+        ],
+        "rotationDeg": [
+          -110,
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    },
+    {
+      "id": "hinge_pin",
+      "target": "hinge_pin",
+      "label": "Metal hinge pin",
+      "kind": "generated",
+      "shapeHash": "045d0411a5ccacf4d649c6af5932d01d04d422c4950f46ac8ddee43d150d1f5c",
+      "transform": {
+        "positionMm": [
+          0,
+          17,
+          13
+        ],
+        "rotationDeg": [
+          0,
+          90,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    }
+  ],
+  "assets": [],
+  "updatedAt": "2026-08-20T13:39:25.882Z",
+  "parameters": {
+    "bottom_half": {
+      "overall_length": 80,
+      "chamber_diameter": 35,
+      "chamber_depth": 20,
+      "wall_thickness": 2,
+      "rim_height": 3,
+      "rim_lip": 1,
+      "magnet_diameter": 6,
+      "magnet_depth": 2.2,
+      "magnet_offset_from_center": 15,
+      "hinge_ear_width": 8,
+      "hinge_ear_thickness": 4,
+      "hinge_pin_diameter": 3,
+      "outer_width": 40,
+      "bottom_height": 13,
+      "central_web": 4,
+      "magnet_y_from_center": 14,
+      "hinge_knuckle_diameter": 6,
+      "hinge_knuckle_width": 10,
+      "hinge_knuckle_spacing": 25,
+      "magnet_x_spacing": 10,
+      "hinge_hole_clearance": 0.3
+    },
+    "top_lid": {
+      "overall_length": 80,
+      "chamber_diameter": 35,
+      "lid_height": 12,
+      "wall_thickness": 2,
+      "rim_clearance": 0.2,
+      "magnet_diameter": 6,
+      "magnet_depth": 2.2,
+      "magnet_offset_from_center": 15,
+      "hinge_ear_width": 8,
+      "hinge_ear_thickness": 4,
+      "hinge_pin_diameter": 3,
+      "hinge_clearance": 0.3,
+      "outer_width": 40,
+      "inner_clearance": 0.3,
+      "relief_depth": 3,
+      "magnet_y_from_center": 14,
+      "hinge_knuckle_diameter": 6,
+      "hinge_knuckle_width": 10,
+      "hinge_knuckle_spacing": 25,
+      "magnet_x_spacing": 10,
+      "hinge_hole_clearance": 0.3,
+      "hinge_center_width": 39.4
+    },
+    "hinge_pin": {
+      "hinge_pin_diameter": 3,
+      "hinge_pin_length": 61
+    }
+  }
+}

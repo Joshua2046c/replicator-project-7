@@ -1,0 +1,74 @@
+{
+  "requirements": {
+    "product_class": {
+      "value": "mechanical",
+      "source": "user"
+    },
+    "form_factor": {
+      "value": "双圆形胶囊状翻盖储物盒",
+      "source": "user"
+    },
+    "manufacturing_method": {
+      "value": "fdm",
+      "source": "default"
+    },
+    "overall_dimensions_mm": {
+      "value": {
+        "length": 80,
+        "width": 40,
+        "height": 25
+      },
+      "source": "user"
+    },
+    "chamber_dimensions": {
+      "value": {
+        "diameter": 35,
+        "depth": 20,
+        "count": 2
+      },
+      "source": "default"
+    },
+    "wall_thickness_mm": {
+      "value": 2.0,
+      "source": "default"
+    },
+    "hinge_mechanism": {
+      "value": "printed_structure_with_metal_pin",
+      "source": "user"
+    },
+    "closure_mechanism": {
+      "value": "embedded_magnets",
+      "source": "user"
+    },
+    "magnet_specs": {
+      "value": {
+        "type": "neodymium_disc",
+        "diameter_mm": 6,
+        "thickness_mm": 2,
+        "quantity": 4
+      },
+      "source": "default"
+    },
+    "surface_finish": {
+      "value": "smooth",
+      "source": "user"
+    },
+    "material": {
+      "value": "PLA",
+      "source": "default"
+    },
+    "print_orientation": {
+      "value": "flat_minimal_support",
+      "source": "default"
+    },
+    "hinge_durability": {
+      "value": "1000_cycles_minimum",
+      "source": "default"
+    },
+    "edge_treatment": {
+      "value": "rounded_safe_edges",
+      "source": "default"
+    }
+  },
+  "open_questions": []
+}
