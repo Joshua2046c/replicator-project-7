@@ -16,7 +16,7 @@
       "value": {
         "length": 80,
         "width": 46,
-        "height": 27,
+        "height": 32,
         "body_width": 40
       },
       "source": "user"
@@ -58,9 +58,10 @@
     "exterior_edge_profile": {
       "value": {
         "bottom_outer_fillet_mm": 2,
-        "top_outer_fillet_mm": 3,
-        "lid_profile": "slightly_crowned",
-        "mating_faces": "planar"
+        "top_outer_fillet_mm": 0,
+        "lid_profile": "continuous_crown_sagitta_4mm",
+        "mating_faces": "planar",
+        "lid_center_rise_mm": 4
       },
       "source": "user"
     },

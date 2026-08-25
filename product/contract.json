@@ -2,7 +2,7 @@
   "version": 2,
   "artifact_level": "assembly",
   "deliverable_intent": "manufacturing_package",
-  "summary": "FDM可打印双圆形胶囊状翻盖储物盒，带有圆角浅拱外形、打印铰链结构、金属销钉和嵌入式磁铁闭合机构。",
+  "summary": "FDM可打印双圆形胶囊状翻盖储物盒，带有圆润拱形上盖、底部圆角、打印铰链结构、金属销钉和嵌入式磁铁闭合机构。",
   "required_interfaces": [
     {
       "id": "hinge_pin_fit",

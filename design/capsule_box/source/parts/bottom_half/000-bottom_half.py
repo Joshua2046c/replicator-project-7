@@ -3,7 +3,7 @@ from build123d import *
 
 overall_length = param("overall_length", 80.0)
 outer_width = param("outer_width", 40.0)
-bottom_height = param("bottom_height", 13.0)
+bottom_height = param("bottom_height", 16.0)
 bottom_outer_fillet = param("bottom_outer_fillet", 2.0)
 chamber_diameter = param("chamber_diameter", 35.0)
 chamber_depth = param("chamber_depth", 10.0)
@@ -45,7 +45,7 @@ outer_body = outer_body + Pos(end_center, 0, 0) * Cylinder(
     outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
 
-# Round only the exterior bottom perimeter; keep the top mating rim planar.
+# Keep the lower exterior radius unchanged while increasing the shell height.
 bottom_perimeter = [edge for edge in outer_body.edges() if abs(edge.center().Z) < 0.01]
 body = fillet(bottom_perimeter, radius=bottom_outer_fillet)
 
