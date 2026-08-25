@@ -2,7 +2,7 @@
   "version": 2,
   "artifact_level": "assembly",
   "deliverable_intent": "manufacturing_package",
-  "summary": "FDM可打印双圆形胶囊状翻盖储物盒，带有打印铰链结构、金属销钉和嵌入式磁铁闭合机构。",
+  "summary": "FDM可打印双圆形胶囊状翻盖储物盒，带有圆角浅拱外形、打印铰链结构、金属销钉和嵌入式磁铁闭合机构。",
   "required_interfaces": [
     {
       "id": "hinge_pin_fit",
@@ -14,7 +14,7 @@
     {
       "id": "magnet_pockets",
       "kind": "internal_fit",
-      "description": "磁铁槽必须精确容纳直径6mm、厚度2mm的钕磁铁",
+      "description": "上盖和底盒各设置一个居中的磁铁槽，闭合时上下同心，并精确容纳直径6mm、厚度2mm的钕磁铁",
       "source": "user_requested",
       "required": true
     }
@@ -34,7 +34,7 @@
     }
   ],
   "assembly_story": {
-    "installation": "打印完成后，将4颗钕磁铁嵌入上下盖的磁铁槽中（可使用胶水固定），然后穿入金属销钉连接铰链",
+    "installation": "打印完成后，将2颗钕磁铁分别嵌入上盖和底盒的中央磁铁槽中（可使用胶水固定并注意极性），然后穿入金属销钉连接铰链",
     "maintenance": "通过翻盖打开盒体，清洁内腔，检查铰链和磁铁状态",
     "user_access": ["翻盖开合", "双腔储物空间", "磁铁闭合"]
   },

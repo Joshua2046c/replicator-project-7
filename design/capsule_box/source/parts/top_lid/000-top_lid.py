@@ -1,16 +1,16 @@
-# Top lid with compact external center hinge knuckle
+# Top lid with rounded crown and compact external center hinge knuckle
 from build123d import *
 
 overall_length = param("overall_length", 80.0)
 outer_width = param("outer_width", 40.0)
-lid_height = param("lid_height", 12.0)
+lid_height = param("lid_height", 14.0)
+top_outer_fillet = param("top_outer_fillet", 3.0)
 inner_clearance = param("inner_clearance", 0.3)
 chamber_diameter = param("chamber_diameter", 35.0)
 relief_depth = param("relief_depth", 10.0)
 
 magnet_diameter = param("magnet_diameter", 6.0)
 magnet_depth = param("magnet_depth", 2.2)
-magnet_x_spacing = param("magnet_x_spacing", 10.0)
 magnet_y_from_center = param("magnet_y_from_center", 16.0)
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
@@ -30,18 +30,22 @@ chamber_center = end_center
 hinge_span = 2 * compact_side_knuckle_width + compact_center_knuckle_width + 2 * hinge_axial_gap
 pin_hole_length = hinge_span + 1.0
 
-body = Box(
+outer_body = Box(
     straight_length,
     outer_width,
     lid_height,
     align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
-body = body + Pos(-end_center, 0, 0) * Cylinder(
+outer_body = outer_body + Pos(-end_center, 0, 0) * Cylinder(
     outer_radius, lid_height, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
-body = body + Pos(end_center, 0, 0) * Cylinder(
+outer_body = outer_body + Pos(end_center, 0, 0) * Cylinder(
     outer_radius, lid_height, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
+
+# Round only the upper exterior perimeter to create a shallow crown.
+top_perimeter = [edge for edge in outer_body.edges() if abs(edge.center().Z - lid_height) < 0.01]
+body = fillet(top_perimeter, radius=top_outer_fillet)
 
 relief_radius = chamber_diameter / 2 + inner_clearance
 for x_pos in (-chamber_center, chamber_center):
@@ -52,15 +56,13 @@ for x_pos in (-chamber_center, chamber_center):
     )
     body = body - relief
 
-for x_pos in (-magnet_x_spacing / 2, magnet_x_spacing / 2):
-    pocket = Pos(x_pos, -magnet_y_from_center, -0.01) * Cylinder(
-        magnet_diameter / 2,
-        magnet_depth + 0.01,
-        align=(Align.CENTER, Align.CENTER, Align.MIN),
-    )
-    body = body - pocket
+magnet_pocket = Pos(0, -magnet_y_from_center, -0.01) * Cylinder(
+    magnet_diameter / 2,
+    magnet_depth + 0.01,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
+)
+body = body - magnet_pocket
 
-# The central knuckle is outside the body and joined by a printable neck.
 neck = Pos(0, outer_width / 2 + hinge_neck_depth / 2 - 1.0, hinge_neck_height / 2) * Box(
     compact_center_knuckle_width,
     hinge_neck_depth,

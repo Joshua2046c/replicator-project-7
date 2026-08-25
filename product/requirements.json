@@ -16,7 +16,7 @@
       "value": {
         "length": 80,
         "width": 46,
-        "height": 25,
+        "height": 27,
         "body_width": 40
       },
       "source": "user"
@@ -46,12 +46,22 @@
         "type": "neodymium_disc",
         "diameter_mm": 6,
         "thickness_mm": 2,
-        "quantity": 4
+        "quantity": 2,
+        "placement": "one_centered_in_each_half"
       },
-      "source": "default"
+      "source": "user"
     },
     "surface_finish": {
       "value": "smooth",
+      "source": "user"
+    },
+    "exterior_edge_profile": {
+      "value": {
+        "bottom_outer_fillet_mm": 2,
+        "top_outer_fillet_mm": 3,
+        "lid_profile": "slightly_crowned",
+        "mating_faces": "planar"
+      },
       "source": "user"
     },
     "material": {
