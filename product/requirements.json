@@ -51,6 +51,17 @@
       },
       "source": "user"
     },
+    "front_recess_specs": {
+      "value": {
+        "diameter_mm": 14,
+        "depth_mm": 2.4,
+        "quantity": 1,
+        "placement": "bottom_half_front_center",
+        "center_x_mm": 0,
+        "center_z_mm": 8
+      },
+      "source": "user"
+    },
     "surface_finish": {
       "value": "smooth",
       "source": "user"

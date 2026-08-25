@@ -1,4 +1,4 @@
-# Bottom half with rounded exterior base and compact external hinge
+# Bottom half with rounded exterior base, compact external hinge, and front recess
 from build123d import *
 
 overall_length = param("overall_length", 80.0)
@@ -11,7 +11,12 @@ wall_thickness = param("wall_thickness", 2.0)
 
 magnet_diameter = param("magnet_diameter", 6.0)
 magnet_depth = param("magnet_depth", 2.2)
-magnet_y_from_center = param("magnet_y_from_center", 16.0)
+magnet_y_from_center = param("magnet_y_from_center", 12.5)
+
+front_recess_diameter = param("front_recess_diameter", 14.0)
+front_recess_depth = param("front_recess_depth", 2.4)
+front_recess_x = param("front_recess_x", 0.0)
+front_recess_z = param("front_recess_z", 8.0)
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
 hinge_hole_clearance = param("hinge_hole_clearance", 0.3)
@@ -63,6 +68,18 @@ magnet_pocket = Pos(0, -magnet_y_from_center, bottom_height - magnet_depth) * Cy
     align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
 body = body - magnet_pocket
+
+# Front-side circular recess, centered on the solid bridge between the two chambers.
+front_recess = Pos(
+    front_recess_x,
+    -outer_width / 2,
+    front_recess_z,
+) * Rot(X=-90) * Cylinder(
+    front_recess_diameter / 2,
+    front_recess_depth,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
+)
+body = body - front_recess
 
 for x_pos in (-side_x, side_x):
     neck = Pos(x_pos, outer_width / 2 + hinge_neck_depth / 2 - 1.0, bottom_height - hinge_neck_height / 2) * Box(
