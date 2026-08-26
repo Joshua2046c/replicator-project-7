@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 103,
-  "sourceHash": "bd31b44f745457c88d02b561e1d7c8c82acc8ee2be535a8416c5b5f2b86dd1c7",
+  "buildNumber": 113,
+  "sourceHash": "2e59ecab0a8a637b52f28bb675ca8036dc9d58d5589fd0a9e1b960baee732817",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "6b8f8f042c8ef22ddee80ca000c20d6b1801c7f0d72f4b5b22ef2b3064025840"
+          "sha256": "95aebb25e78d9acb1abf9a78a228a9f92fed6ee3d588a6da9e46e6ab1d48d5a8"
         }
       ],
       "dependencies": []
@@ -28,7 +28,7 @@
           "target": "top_lid",
           "order": 0,
           "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
-          "sha256": "9c0ad225857d9b58bcde81fd4787b0935daf051901fa35010bc271cbdb4cfa6a"
+          "sha256": "5657330fd04ca80a3602a5724ee63ccd89be88722b6306a93df9d745e2b1d176"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "343afc10d1960627e9b1b328cf7bbf1fd45932d2470c34f7d305c2d5e674d0aa",
+      "shapeHash": "b5a0ced8622d25312887e97164a3cba4a0ba97a39daf2855a2977969fd13409a",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "01cba3b6ed9c1a81f2d83662aa4b6e7a578be062b59a40147e7aa1d874c21b5b",
+      "shapeHash": "34e42b3d0924cd759b4a29da5520d864f8742a17f18655113d43f06dd5c29bc6",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "2e186f6fd36ba950dd091fa599eddc3528ac40b46d3cd61fc536dfa3d97d439c",
+      "shapeHash": "b7b1566ddb04d0818ffc285ae0a872844d80054bf1872719d2337aa7c5beacbe",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-26T04:20:14.446Z",
+  "updatedAt": "2026-08-26T05:22:45.296Z",
   "parameters": {
     "bottom_half": {
       "overall_length": 80,
@@ -139,7 +139,7 @@
       "rim_height": 3,
       "rim_lip": 1,
       "magnet_diameter": 6,
-      "magnet_depth": 2.2,
+      "magnet_depth": 2,
       "magnet_offset_from_center": 15,
       "hinge_ear_width": 8,
       "hinge_ear_thickness": 4,
@@ -148,7 +148,7 @@
       "bottom_height": 16,
       "central_web": 4,
       "magnet_y_from_center": 12.5,
-      "hinge_knuckle_diameter": 6,
+      "hinge_knuckle_diameter": 7.5,
       "hinge_knuckle_width": 10,
       "hinge_knuckle_spacing": 25,
       "magnet_x_spacing": 10,
@@ -169,9 +169,10 @@
       "front_recess_x": 0,
       "front_recess_z": 16,
       "hinge_root_fillet": 0.6,
-      "bottom_hinge_root_drop": 4,
+      "bottom_hinge_root_drop": 6,
       "bottom_hinge_root_overlap": 2,
-      "bottom_hinge_root_pull": 2.2
+      "bottom_hinge_root_pull": 2.2,
+      "hinge_inner_wall_overlap": 0.7
     },
     "top_lid": {
       "overall_length": 80,
@@ -180,7 +181,7 @@
       "wall_thickness": 2,
       "rim_clearance": 0.2,
       "magnet_diameter": 6,
-      "magnet_depth": 2.2,
+      "magnet_depth": 2,
       "magnet_offset_from_center": 15,
       "hinge_ear_width": 8,
       "hinge_ear_thickness": 4,
@@ -190,7 +191,7 @@
       "inner_clearance": 0.3,
       "relief_depth": 3,
       "magnet_y_from_center": 12.5,
-      "hinge_knuckle_diameter": 6,
+      "hinge_knuckle_diameter": 7.5,
       "hinge_knuckle_width": 10,
       "hinge_knuckle_spacing": 25,
       "magnet_x_spacing": 10,
@@ -219,9 +220,11 @@
       "hinge_root_start_height": 6,
       "hinge_root_start_y": 16,
       "hinge_root_start_z": 11,
-      "top_hinge_root_rise": 4,
+      "top_hinge_root_rise": 8,
       "top_hinge_root_overlap": 2,
-      "top_hinge_root_pull": 2.2
+      "top_hinge_root_pull": 2.2,
+      "hinge_inner_wall_overlap": 0.7,
+      "top_hinge_axial_end_fillet": 0.4
     },
     "hinge_pin": {
       "hinge_pin_diameter": 3,

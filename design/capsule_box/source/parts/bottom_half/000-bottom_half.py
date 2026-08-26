@@ -10,7 +10,7 @@ chamber_depth = param("chamber_depth", 10.0)
 wall_thickness = param("wall_thickness", 2.0)
 
 magnet_diameter = param("magnet_diameter", 6.0)
-magnet_depth = param("magnet_depth", 2.2)
+magnet_depth = param("magnet_depth", 2.0)
 magnet_y_from_center = param("magnet_y_from_center", 12.5)
 
 front_recess_diameter = param("front_recess_diameter", 12.0)
@@ -20,7 +20,7 @@ front_recess_z = param("front_recess_z", bottom_height)
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
 hinge_hole_clearance = param("hinge_hole_clearance", 0.3)
-hinge_knuckle_diameter = param("hinge_knuckle_diameter", 6.0)
+hinge_knuckle_diameter = param("hinge_knuckle_diameter", 7.5)
 compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
@@ -28,8 +28,9 @@ hinge_axis_y = param("hinge_axis_y", 23.0)
 hinge_neck_depth = param("hinge_neck_depth", 5.0)
 hinge_neck_height = param("hinge_neck_height", 3.0)
 hinge_root_fillet = param("hinge_root_fillet", 1.35)
-bottom_hinge_root_drop = param("bottom_hinge_root_drop", 4.0)
-bottom_hinge_root_pull = param("bottom_hinge_root_pull", 1.6)
+bottom_hinge_root_drop = param("bottom_hinge_root_drop", 6.0)
+bottom_hinge_root_pull = param("bottom_hinge_root_pull", 2.2)
+hinge_inner_wall_overlap = param("hinge_inner_wall_overlap", 0.7)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -60,11 +61,10 @@ front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90
 )
 body = body - front_recess
 
-# Each lower knuckle is one tangent teardrop section anchored on the actual
-# shell boundary. The top curve is tangent to the mating plane, the lower curve
-# is tangent to the rear wall, and both meet the barrel without a shoulder.
+# The tangent teardrop extends into the rear shell wall so the pin-hole inner
+# side retains a structural bridge without moving the hinge axis or adding a rib.
 barrel_radius = hinge_knuckle_diameter / 2
-shell_wall_y = outer_width / 2
+shell_wall_y = outer_width / 2 - hinge_inner_wall_overlap
 root_lower_z = bottom_height - bottom_hinge_root_drop
 for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as root_sketch:

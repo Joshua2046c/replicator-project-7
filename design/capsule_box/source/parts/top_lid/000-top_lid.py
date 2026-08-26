@@ -13,7 +13,7 @@ chamber_diameter = param("chamber_diameter", 35.0)
 relief_depth = param("relief_depth", 10.0)
 
 magnet_diameter = param("magnet_diameter", 6.0)
-magnet_depth = param("magnet_depth", 2.2)
+magnet_depth = param("magnet_depth", 2.0)
 magnet_y_from_center = param("magnet_y_from_center", 12.5)
 
 front_recess_diameter = param("front_recess_diameter", 12.0)
@@ -23,7 +23,7 @@ front_recess_z = param("front_recess_z", 0.0)
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
 hinge_hole_clearance = param("hinge_hole_clearance", 0.3)
-hinge_knuckle_diameter = param("hinge_knuckle_diameter", 6.0)
+hinge_knuckle_diameter = param("hinge_knuckle_diameter", 7.5)
 compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
@@ -31,8 +31,10 @@ hinge_axis_y = param("hinge_axis_y", 23.0)
 hinge_neck_depth = param("hinge_neck_depth", 5.0)
 hinge_neck_height = param("hinge_neck_height", 3.0)
 hinge_root_fillet = param("hinge_root_fillet", 3.5)
-top_hinge_root_rise = param("top_hinge_root_rise", 4.0)
-top_hinge_root_pull = param("top_hinge_root_pull", 1.6)
+top_hinge_root_rise = param("top_hinge_root_rise", 8.0)
+top_hinge_root_pull = param("top_hinge_root_pull", 2.2)
+hinge_inner_wall_overlap = param("hinge_inner_wall_overlap", 0.7)
+top_hinge_axial_end_fillet = param("top_hinge_axial_end_fillet", 0.4)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -85,11 +87,10 @@ front_recess = Pos(
 )
 body = body - front_recess
 
-# The upper knuckle mirrors the lower tangent topology and anchors directly on
-# the actual rear wall. The lower curve is tangent to the mating plane, the
-# upper curve is tangent to the rear wall, and both meet the barrel smoothly.
+# Extend the tangent teardrop into the rear shell for the inner bridge, then
+# soften only its axial end edges so the center knuckle has no hard shoulder.
 barrel_radius = hinge_knuckle_diameter / 2
-shell_wall_y = outer_width / 2
+shell_wall_y = outer_width / 2 - hinge_inner_wall_overlap
 root_upper_z = top_hinge_root_rise
 with BuildSketch(Plane.YZ) as root_sketch:
     with BuildLine():
@@ -115,6 +116,13 @@ with BuildSketch(Plane.YZ) as root_sketch:
 root_transition = Pos(-compact_center_knuckle_width / 2, 0, 0) * extrude(
     root_sketch.sketch, amount=compact_center_knuckle_width
 )
+root_end_x = compact_center_knuckle_width / 2
+axial_end_edges = [
+    edge for edge in root_transition.edges()
+    if abs(abs(edge.center().X) - root_end_x) < 0.02
+]
+if axial_end_edges:
+    root_transition = fillet(axial_end_edges, radius=top_hinge_axial_end_fillet)
 lid_with_hinge = body + root_transition
 
 pin_hole = Pos(0, hinge_axis_y, 0) * Rot(Y=90) * Cylinder(

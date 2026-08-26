@@ -37,13 +37,28 @@
       "value": {
         "type": "printed_structure_with_metal_pin",
         "root_transition": "continuous_large_radius_profile_from_both_shells_into_hinge_barrels",
+        "root_connection": "thickened_without_thin_neck_or_inner_bridge",
+        "inner_bridge_requirement": "pin_hole_inner_edge_to_shell_must_not_form_thin_wall",
         "forbidden_geometry": [
           "rectangular_neck_step",
           "independent_gusset_block",
-          "visible_shoulder_or_ledge"
+          "visible_shoulder_or_ledge",
+          "thin_wall_at_hinge_root"
         ]
       },
       "source": "user"
+    },
+    "hinge_strength_geometry": {
+      "value": {
+        "knuckle_outer_diameter_mm": 7.5,
+        "pin_hole_diameter_mm": 3.3,
+        "radial_material_mm": 2.1,
+        "bottom_root_connection_height_mm": 6,
+        "top_root_connection_height_mm": 8,
+        "inner_wall_overlap_mm": 0.7,
+        "effective_inner_bridge_mm": 2.05
+      },
+      "source": "default"
     },
     "closure_mechanism": {
       "value": "embedded_magnets",
