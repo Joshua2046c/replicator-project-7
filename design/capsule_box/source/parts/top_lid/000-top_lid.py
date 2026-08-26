@@ -29,10 +29,11 @@ compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
 hinge_axis_y = param("hinge_axis_y", 24.1)
-top_hinge_root_radius = param("top_hinge_root_radius", 2.6)
-top_hinge_root_y = param("top_hinge_root_y", 18.0)
-top_hinge_root_z = param("top_hinge_root_z", 3.6)
-top_hinge_parting_clearance = param("top_hinge_parting_clearance", 1.0)
+top_hinge_root_y_radius_v2 = param("top_hinge_root_y_radius_v2", 2.8)
+top_hinge_root_z_radius_v2 = param("top_hinge_root_z_radius_v2", 2.4)
+top_hinge_root_y_v2 = param("top_hinge_root_y_v2", 20.8)
+top_hinge_root_z_v2 = param("top_hinge_root_z_v2", 2.85)
+top_hinge_parting_clearance_v2 = param("top_hinge_parting_clearance_v2", 0.4)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -46,7 +47,15 @@ relief_radius = chamber_diameter / 2 + inner_clearance
 bowl_radius = (relief_radius ** 2 + inner_bowl_sagitta ** 2) / (2 * inner_bowl_sagitta)
 bowl_center_z = relief_depth + inner_bowl_sagitta - bowl_radius
 bowl_max_depth = relief_depth + inner_bowl_sagitta
+root_bottom_z = top_hinge_root_z_v2 - top_hinge_root_z_radius_v2
+root_inner_y = top_hinge_root_y_v2 - top_hinge_root_y_radius_v2
+root_outer_y = top_hinge_root_y_v2 + top_hinge_root_y_radius_v2
+root_to_axis = ((hinge_axis_y - top_hinge_root_y_v2) ** 2 + top_hinge_root_z_v2 ** 2) ** 0.5
 assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
+assert root_bottom_z >= top_hinge_parting_clearance_v2, "Upper hinge root must remain above the mating plane"
+assert root_inner_y < outer_width / 2, "Upper hinge root must overlap the lid rear wall"
+assert hinge_axis_y - root_outer_y < barrel_radius, "Upper hinge root must overlap the complete hinge barrel"
+assert root_to_axis > hole_radius + min(top_hinge_root_y_radius_v2, top_hinge_root_z_radius_v2), "Upper hinge root must remain outside the pin bore"
 assert inner_bowl_sagitta > 0, "Inner bowl sagitta must be positive"
 assert bowl_max_depth <= dome_base_height, "Inner bowl must not extend above the outer dome transition height"
 
@@ -97,19 +106,14 @@ front_recess = Pos(
 )
 body = body - front_recess
 
-# Mirror the lower construction: hull the complete barrel with a root circle
-# buried in the lid shell, then relieve only the inner area near the parting plane.
+# The center knuckle combines a complete barrel with one upper elliptical root.
+# The root stays above the mating plane and overlaps the rear wall and barrel,
+# removing the former tapered web and abrupt shoulder without opening the bore.
 with BuildSketch(Plane.YZ) as outer_sketch:
     with Locations((hinge_axis_y, 0)):
         Circle(barrel_radius)
-    with Locations((top_hinge_root_y, top_hinge_root_z)):
-        Circle(top_hinge_root_radius)
-    make_hull()
-    relief_max_y = barrel_inner_y - 0.02
-    relief_width = 30.0
-    relief_height = 20.0
-    with Locations((relief_max_y - relief_width / 2, top_hinge_parting_clearance - relief_height / 2)):
-        Rectangle(relief_width, relief_height, mode=Mode.SUBTRACT)
+    with Locations((top_hinge_root_y_v2, top_hinge_root_z_v2)):
+        Ellipse(top_hinge_root_y_radius_v2, top_hinge_root_z_radius_v2)
     with Locations((hinge_axis_y, 0)):
         Circle(hole_radius, mode=Mode.SUBTRACT)
 center_knuckle = Pos(-compact_center_knuckle_width / 2, 0, 0) * extrude(

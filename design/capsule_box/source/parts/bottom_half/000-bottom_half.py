@@ -26,9 +26,11 @@ compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
 hinge_axis_y = param("hinge_axis_y", 24.1)
-bottom_hinge_root_radius_v2 = param("bottom_hinge_root_radius_v2", 3.0)
-bottom_hinge_root_y_v2 = param("bottom_hinge_root_y_v2", 18.0)
-bottom_hinge_root_z_v2 = param("bottom_hinge_root_z_v2", 12.4)
+bottom_hinge_root_y_radius_v5 = param("bottom_hinge_root_y_radius_v5", 2.8)
+bottom_hinge_root_z_radius_v5 = param("bottom_hinge_root_z_radius_v5", 2.4)
+bottom_hinge_root_y_v5 = param("bottom_hinge_root_y_v5", 20.8)
+bottom_hinge_root_z_v5 = param("bottom_hinge_root_z_v5", 13.2)
+bottom_hinge_parting_clearance_v3 = param("bottom_hinge_parting_clearance_v3", 0.4)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -38,12 +40,19 @@ chamber_center = end_center
 side_x = compact_center_knuckle_width / 2 + hinge_axial_gap + compact_side_knuckle_width / 2
 barrel_radius = hinge_knuckle_diameter / 2
 hole_radius = (hinge_pin_diameter + hinge_hole_clearance) / 2
-hinge_shell_clearance = hinge_axis_y - barrel_radius - outer_width / 2
+barrel_inner_y = hinge_axis_y - barrel_radius
+hinge_shell_clearance = barrel_inner_y - outer_width / 2
 minimum_floor_thickness = wall_thickness - bottom_bowl_sagitta
 bowl_radius = (chamber_radius ** 2 + bottom_bowl_sagitta ** 2) / (2 * bottom_bowl_sagitta)
 bowl_center_z = minimum_floor_thickness + bowl_radius
+root_top_z = bottom_hinge_root_z_v5 + bottom_hinge_root_z_radius_v5
+root_inner_y = bottom_hinge_root_y_v5 - bottom_hinge_root_y_radius_v5
+root_outer_y = bottom_hinge_root_y_v5 + bottom_hinge_root_y_radius_v5
+root_to_axis_y = hinge_axis_y - root_outer_y
 assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
-assert bottom_hinge_root_z_v2 + bottom_hinge_root_radius_v2 < bottom_height, "Lower root must remain below the mating plane"
+assert root_top_z <= bottom_height - bottom_hinge_parting_clearance_v3, "Lower hinge root must remain below the mating plane"
+assert root_inner_y < outer_width / 2, "Lower hinge root must overlap the shell rear wall"
+assert root_to_axis_y < barrel_radius, "Lower hinge root must overlap the complete hinge barrel"
 assert bottom_bowl_sagitta > 0, "Bottom bowl sagitta must be positive"
 assert minimum_floor_thickness >= 1.6, "PLA bottom floor must remain at least 1.6 mm thick"
 
@@ -63,23 +72,23 @@ front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90
 )
 body = body - front_recess
 
-# Each side knuckle is one watertight teardrop section with a complete coaxial bore.
+# Each lower knuckle combines a complete barrel with one low elliptical root.
+# The ellipse is buried in the shell and overlaps the barrel below the pin bore,
+# creating one continuous rounded load path without entering the mating plane.
 for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as knuckle_sketch:
         with Locations((hinge_axis_y, bottom_height)):
             Circle(barrel_radius)
-        with Locations((bottom_hinge_root_y_v2, bottom_hinge_root_z_v2)):
-            Circle(bottom_hinge_root_radius_v2)
-        make_hull()
+        with Locations((bottom_hinge_root_y_v5, bottom_hinge_root_z_v5)):
+            Ellipse(bottom_hinge_root_y_radius_v5, bottom_hinge_root_z_radius_v5)
         with Locations((hinge_axis_y, bottom_height)):
             Circle(hole_radius, mode=Mode.SUBTRACT)
     x0 = x_pos - compact_side_knuckle_width / 2
     knuckle = Pos(x0, 0, 0) * extrude(knuckle_sketch.sketch, amount=compact_side_knuckle_width)
     body = (body + knuckle).clean()
 
-# Cut the storage chambers after the hinge fusion. This restores the continuous
-# circular rear walls and removes the hinge-root breakthrough marked by the user.
-# A large-radius spherical lower surface adds only 0.4 mm of center sag.
+# Cut the storage chambers after the hinge fusion. This keeps the chamber rear
+# walls continuous and preserves the shallow 0.4 mm bowl profile.
 for x_pos in (-chamber_center, chamber_center):
     cavity_cylinder = Pos(x_pos, 0, minimum_floor_thickness - 0.01) * Cylinder(
         chamber_radius,
