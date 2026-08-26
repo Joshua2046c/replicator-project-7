@@ -1,0 +1,117 @@
+{
+  "designId": "capsule_box",
+  "buildNumber": 103,
+  "sourceHash": "bd31b44f745457c88d02b561e1d7c8c82acc8ee2be535a8416c5b5f2b86dd1c7",
+  "exportId": "export-fe3fdb4a8b2f89463a86ad46ce190c33",
+  "generatedAt": "2026-08-26T04:20:14.446Z",
+  "designSha256": "1e950ffefeaceb887422cfa0e565e44fa3b1fa8ad65e9887b4b7aaaf43d28333",
+  "role": "capsule_box",
+  "stateHash": "92a85471e1a920cb5871a650b52dc3ebbd188eedc96eda0c6a2b4d78e92bc004",
+  "stateManifest": {
+    "schemaVersion": 2,
+    "designId": "capsule_box",
+    "role": "capsule_box",
+    "design": {
+      "buildNumber": 103,
+      "sourceHash": "bd31b44f745457c88d02b561e1d7c8c82acc8ee2be535a8416c5b5f2b86dd1c7",
+      "designSha256": "a0b6fe0918a14540dd84cbc03ea77fe0f60cf13a89357c5b44897a2450f7e32c",
+      "manifestSha256": "382c7a937c40c8377500ceb96733bf811975a783183ced3817961864a4ac8e78",
+      "stepSha256": "c3dd174b2d412d44e16381f6cf0bf6837e84001e0175a52fbf93e7465d6e5e28",
+      "pcbReleases": []
+    },
+    "brief": {
+      "path": "design/capsule_box/README.md",
+      "sha256": "85f4e1f50054e717ac4a03a608829e97cba92d293a21a7b7e1dd7a4ef11e2a1e"
+    },
+    "requirement": {
+      "artifactContractPath": "product/contract.json",
+      "artifactContractSha256": "835feae3f54bd1bbf8264e3f8c6ef15924c1f89b44a01e4f849cf01a0763a3bf",
+      "designRequirementSha256": "c75497997a345d62441b92def9156333d6930388f8169d6bf88a812cca68417f",
+      "inputs": [
+        {
+          "role": "external-reference",
+          "id": "hinge_interference_markup",
+          "path": "product/references/uploads/20260820T134535570Z-1-mark.png",
+          "sha256": "e572b057a94479c83602e119d1309dd7b30adfe7e2c597e5b9396d76fbacd319",
+          "sizeBytes": 59701
+        },
+        {
+          "role": "external-reference",
+          "id": "lower_hinge_root_transition_markup",
+          "path": "product/references/uploads/20260826T040428168Z-1-mark.png",
+          "sha256": "46bb6e7b9308abce0e540a01a3c693a95cf5f888e7443b0a12ba5c141ca68ec4",
+          "sizeBytes": 71394
+        },
+        {
+          "role": "external-reference",
+          "id": "reference_image",
+          "path": "product/references/uploads/20260820T115359700Z-1-1.jpg",
+          "sha256": "9ef71f9cc259ee646b8cb3296d9a3f231c17cfb70dd4c72fa281f2e63b2c7aa1",
+          "sizeBytes": 228010
+        }
+      ]
+    },
+    "delivery": {
+      "target": "printable_part",
+      "formats": [
+        "step"
+      ]
+    },
+    "stateHash": "92a85471e1a920cb5871a650b52dc3ebbd188eedc96eda0c6a2b4d78e92bc004"
+  },
+  "buildArtifacts": {
+    "manifestSha256": "382c7a937c40c8377500ceb96733bf811975a783183ced3817961864a4ac8e78",
+    "stepSha256": "c3dd174b2d412d44e16381f6cf0bf6837e84001e0175a52fbf93e7465d6e5e28"
+  },
+  "exportAlgorithm": {
+    "version": 1,
+    "bootstrapSha256": "cf088c3488d7bba6eb00c86434afd640b078aa263e1d152ec0d954c52910c0d7"
+  },
+  "sourceHashes": {
+    "bottom_half/bottom_half": "6b8f8f042c8ef22ddee80ca000c20d6b1801c7f0d72f4b5b22ef2b3064025840",
+    "hinge_pin/hinge_pin": "739a3a0d12371e11c08c6496f0f6e4bd805cda6aa68651960722242fa2a8a1fd",
+    "top_lid/top_lid": "9c0ad225857d9b58bcde81fd4787b0935daf051901fa35010bc271cbdb4cfa6a"
+  },
+  "assetHashes": {},
+  "shapeHashes": {
+    "bottom_shell": "343afc10d1960627e9b1b328cf7bbf1fd45932d2470c34f7d305c2d5e674d0aa",
+    "hinge_pin": "2e186f6fd36ba950dd091fa599eddc3528ac40b46d3cd61fc536dfa3d97d439c",
+    "top_lid": "01cba3b6ed9c1a81f2d83662aa4b6e7a578be062b59a40147e7aa1d874c21b5b"
+  },
+  "runtime": {
+    "manifestHash": "8f80d16e43e1264a8b0945c7acac4f311af14f4c2bdc69f1c63c5d7b9cd45a72",
+    "pythonVersion": "3.12.13",
+    "build123dVersion": "0.10.0",
+    "ocpVersion": "7.8.1.1.post1",
+    "cadpyHash": "d0f8abd6889b78c2644eed1279611fc7db7c2c60c21adc7b2ca388ba3f5135da"
+  },
+  "artifacts": [
+    {
+      "path": "manufacturing/capsule_box/releases/export-fe3fdb4a8b2f89463a86ad46ce190c33/model.step",
+      "role": "model/step",
+      "sha256": "c3dd174b2d412d44e16381f6cf0bf6837e84001e0175a52fbf93e7465d6e5e28",
+      "sizeBytes": 169285
+    }
+  ],
+  "authority": {
+    "version": 1,
+    "algorithm": "hmac-sha256",
+    "keyId": "bb9ad085400f88ed636678f836d2b7d1",
+    "projectId": "3024157f-5c82-4f64-a69c-342f90cfc768",
+    "receiptPath": "manufacturing/capsule_box/releases/export-fe3fdb4a8b2f89463a86ad46ce190c33/receipt.json",
+    "payloadSha256": "6c8164a96822cab732b934d457acb91e3b506b96a15b89b7ed6dc0b71d222a84",
+    "mac": "de8a40302e213d47d8b046c0a8f31193f67fc99589922ed35157f65ff0e8cbbd"
+  },
+  "schemaVersion": 3,
+  "status": "repaired_after_review",
+  "review": {
+    "reviewId": "review-101-7711bf59-6e8b-4607-9bf7-81f67986c769",
+    "path": ".work/builds/cad/capsule_box/reviews/review-101-7711bf59-6e8b-4607-9bf7-81f67986c769/receipt.json",
+    "sha256": "02e1022716b33acfa83ed168291c4e05957b4c6e298bfc5a249e33c15b015b43",
+    "basis": {
+      "kind": "post-review-repair",
+      "reviewedBuild": 101,
+      "reviewedSourceHash": "cb53e7aa9658300cff9e51802664fe30759e297d8d1aca4a1e442735ebd79c5e"
+    }
+  }
+}

@@ -34,7 +34,15 @@
       "source": "default"
     },
     "hinge_mechanism": {
-      "value": "printed_structure_with_metal_pin",
+      "value": {
+        "type": "printed_structure_with_metal_pin",
+        "root_transition": "continuous_large_radius_profile_from_both_shells_into_hinge_barrels",
+        "forbidden_geometry": [
+          "rectangular_neck_step",
+          "independent_gusset_block",
+          "visible_shoulder_or_ledge"
+        ]
+      },
       "source": "user"
     },
     "closure_mechanism": {
@@ -53,12 +61,14 @@
     },
     "front_recess_specs": {
       "value": {
-        "diameter_mm": 14,
-        "depth_mm": 2.4,
+        "diameter_mm": 12,
+        "depth_mm": 1.8,
         "quantity": 1,
-        "placement": "bottom_half_front_center",
+        "placement": "split_across_bottom_and_top_lid_at_closed_mating_plane",
         "center_x_mm": 0,
-        "center_z_mm": 8
+        "center_z_mm": 16,
+        "front_y_mm": -20,
+        "halves": "bottom_lower_semicircle_and_top_upper_semicircle"
       },
       "source": "user"
     },

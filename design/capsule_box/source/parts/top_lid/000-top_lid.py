@@ -1,4 +1,4 @@
-# Top lid with the whole outer cover rolled into one large-radius crown
+# Top lid with the whole outer cover rolled into one large-radius crown and split front recess
 from build123d import *
 
 overall_length = param("overall_length", 80.0)
@@ -16,6 +16,11 @@ magnet_diameter = param("magnet_diameter", 6.0)
 magnet_depth = param("magnet_depth", 2.2)
 magnet_y_from_center = param("magnet_y_from_center", 12.5)
 
+front_recess_diameter = param("front_recess_diameter", 12.0)
+front_recess_depth = param("front_recess_depth", 1.8)
+front_recess_x = param("front_recess_x", 0.0)
+front_recess_z = param("front_recess_z", 0.0)
+
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
 hinge_hole_clearance = param("hinge_hole_clearance", 0.3)
 hinge_knuckle_diameter = param("hinge_knuckle_diameter", 6.0)
@@ -25,6 +30,9 @@ hinge_axial_gap = param("hinge_axial_gap", 0.3)
 hinge_axis_y = param("hinge_axis_y", 23.0)
 hinge_neck_depth = param("hinge_neck_depth", 5.0)
 hinge_neck_height = param("hinge_neck_height", 3.0)
+hinge_root_fillet = param("hinge_root_fillet", 3.5)
+top_hinge_root_rise = param("top_hinge_root_rise", 4.0)
+top_hinge_root_pull = param("top_hinge_root_pull", 1.6)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -33,7 +41,6 @@ chamber_center = end_center
 hinge_span = 2 * compact_side_knuckle_width + compact_center_knuckle_width + 2 * hinge_axial_gap
 pin_hole_length = hinge_span + 1.0
 
-# Keep the complete capsule footprint and roll the top perimeter into one continuous crown.
 outer_body = Box(
     straight_length,
     outer_width,
@@ -47,10 +54,7 @@ outer_body = outer_body + Pos(end_center, 0, 0) * Cylinder(
     outer_radius, lid_height, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
 
-top_edges = [
-    edge for edge in outer_body.edges()
-    if abs(edge.center().Z - lid_height) < 0.01
-]
+top_edges = [edge for edge in outer_body.edges() if abs(edge.center().Z - lid_height) < 0.01]
 if top_edges:
     outer_body = fillet(top_edges, radius=outer_top_fillet)
 
@@ -70,18 +74,48 @@ magnet_pocket = Pos(0, -magnet_y_from_center, -0.01) * Cylinder(
 )
 body = outer_body - magnet_pocket
 
-neck = Pos(0, outer_width / 2 + hinge_neck_depth / 2 - 1.0, hinge_neck_height / 2) * Box(
-    compact_center_knuckle_width,
-    hinge_neck_depth,
-    hinge_neck_height,
-    align=(Align.CENTER, Align.CENTER, Align.CENTER),
+front_recess = Pos(
+    front_recess_x,
+    -outer_width / 2,
+    front_recess_z,
+) * Rot(X=-90) * Cylinder(
+    front_recess_diameter / 2,
+    front_recess_depth,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
-knuckle = Pos(0, hinge_axis_y, 0) * Rot(Y=90) * Cylinder(
-    hinge_knuckle_diameter / 2,
-    compact_center_knuckle_width,
-    align=(Align.CENTER, Align.CENTER, Align.CENTER),
+body = body - front_recess
+
+# The upper knuckle mirrors the lower tangent topology and anchors directly on
+# the actual rear wall. The lower curve is tangent to the mating plane, the
+# upper curve is tangent to the rear wall, and both meet the barrel smoothly.
+barrel_radius = hinge_knuckle_diameter / 2
+shell_wall_y = outer_width / 2
+root_upper_z = top_hinge_root_rise
+with BuildSketch(Plane.YZ) as root_sketch:
+    with BuildLine():
+        Line((shell_wall_y, root_upper_z), (shell_wall_y, 0))
+        Bezier(
+            (shell_wall_y, 0),
+            (shell_wall_y + top_hinge_root_pull, 0),
+            (hinge_axis_y - top_hinge_root_pull, -barrel_radius),
+            (hinge_axis_y, -barrel_radius),
+        )
+        ThreePointArc(
+            (hinge_axis_y, -barrel_radius),
+            (hinge_axis_y + barrel_radius, 0),
+            (hinge_axis_y, barrel_radius),
+        )
+        Bezier(
+            (hinge_axis_y, barrel_radius),
+            (hinge_axis_y - top_hinge_root_pull, barrel_radius),
+            (shell_wall_y, root_upper_z - top_hinge_root_pull),
+            (shell_wall_y, root_upper_z),
+        )
+    make_face()
+root_transition = Pos(-compact_center_knuckle_width / 2, 0, 0) * extrude(
+    root_sketch.sketch, amount=compact_center_knuckle_width
 )
-lid_with_hinge = body + neck + knuckle
+lid_with_hinge = body + root_transition
 
 pin_hole = Pos(0, hinge_axis_y, 0) * Rot(Y=90) * Cylinder(
     (hinge_pin_diameter + hinge_hole_clearance) / 2,

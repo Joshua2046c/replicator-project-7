@@ -7,7 +7,7 @@
     {
       "id": "hinge_pin_fit",
       "kind": "internal_fit",
-      "description": "紧凑三节外置铰链必须容纳直径3mm的金属销钉，轴心位于胶囊主体轮廓外，完整开合不得与盒壁干涉",
+      "description": "紧凑三节外置铰链必须容纳直径3mm的金属销钉，轴心位于胶囊主体轮廓外，完整开合不得与盒壁干涉；上下盖外壁必须以连续大R截面自然过渡到转轴耳节，不得出现矩形颈部、独立补强块或可见阶梯",
       "source": "user_requested",
       "required": true
     },
@@ -31,6 +31,12 @@
       "source": "user_requested",
       "description": "用户标注的原铰链销轴与盒壁穿模问题",
       "path": "product/references/uploads/20260820T134535570Z-1-mark.png"
+    },
+    {
+      "id": "lower_hinge_root_transition_markup",
+      "source": "user_requested",
+      "description": "用户标注的下盖转轴耳根阶梯区域，要求改为自然连续圆弧过渡",
+      "path": "product/references/uploads/20260826T040428168Z-1-mark.png"
     }
   ],
   "assembly_story": {
@@ -48,7 +54,7 @@
         "delivery_target": "printable_part",
         "required_formats": ["step"],
         "interface_ids": ["hinge_pin_fit", "magnet_pockets"],
-        "reference_ids": ["reference_image", "hinge_interference_markup"]
+        "reference_ids": ["reference_image", "hinge_interference_markup", "lower_hinge_root_transition_markup"]
       }
     ]
   },
