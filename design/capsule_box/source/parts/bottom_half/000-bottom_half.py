@@ -8,6 +8,7 @@ bottom_outer_fillet = param("bottom_outer_fillet", 2.0)
 chamber_diameter = param("chamber_diameter", 35.0)
 chamber_depth = param("chamber_depth", 10.0)
 wall_thickness = param("wall_thickness", 2.0)
+bottom_bowl_sagitta = param("bottom_bowl_sagitta", 0.4)
 
 magnet_diameter = param("magnet_diameter", 6.0)
 magnet_depth = param("magnet_depth", 2.0)
@@ -38,18 +39,19 @@ side_x = compact_center_knuckle_width / 2 + hinge_axial_gap + compact_side_knuck
 barrel_radius = hinge_knuckle_diameter / 2
 hole_radius = (hinge_pin_diameter + hinge_hole_clearance) / 2
 hinge_shell_clearance = hinge_axis_y - barrel_radius - outer_width / 2
+minimum_floor_thickness = wall_thickness - bottom_bowl_sagitta
+bowl_radius = (chamber_radius ** 2 + bottom_bowl_sagitta ** 2) / (2 * bottom_bowl_sagitta)
+bowl_center_z = minimum_floor_thickness + bowl_radius
 assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
 assert bottom_hinge_root_z_v2 + bottom_hinge_root_radius_v2 < bottom_height, "Lower root must remain below the mating plane"
+assert bottom_bowl_sagitta > 0, "Bottom bowl sagitta must be positive"
+assert minimum_floor_thickness >= 1.6, "PLA bottom floor must remain at least 1.6 mm thick"
 
 outer_body = Box(straight_length, outer_width, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
 outer_body = outer_body + Pos(-end_center, 0, 0) * Cylinder(outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
 outer_body = outer_body + Pos(end_center, 0, 0) * Cylinder(outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
 bottom_perimeter = [edge for edge in outer_body.edges() if abs(edge.center().Z) < 0.01]
 body = fillet(bottom_perimeter, radius=bottom_outer_fillet)
-
-for x_pos in (-chamber_center, chamber_center):
-    cavity = Pos(x_pos, 0, wall_thickness) * Cylinder(chamber_radius, chamber_depth, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    body = body - cavity
 
 magnet_pocket = Pos(0, -magnet_y_from_center, bottom_height - magnet_depth) * Cylinder(
     magnet_diameter / 2, magnet_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
@@ -61,8 +63,7 @@ front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90
 )
 body = body - front_recess
 
-# Each side knuckle is one watertight teardrop section: hull the complete barrel
-# and a root circle buried in the shell, then subtract the bore from the whole face.
+# Each side knuckle is one watertight teardrop section with a complete coaxial bore.
 for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as knuckle_sketch:
         with Locations((hinge_axis_y, bottom_height)):
@@ -75,6 +76,19 @@ for x_pos in (-side_x, side_x):
     x0 = x_pos - compact_side_knuckle_width / 2
     knuckle = Pos(x0, 0, 0) * extrude(knuckle_sketch.sketch, amount=compact_side_knuckle_width)
     body = (body + knuckle).clean()
+
+# Cut the storage chambers after the hinge fusion. This restores the continuous
+# circular rear walls and removes the hinge-root breakthrough marked by the user.
+# A large-radius spherical lower surface adds only 0.4 mm of center sag.
+for x_pos in (-chamber_center, chamber_center):
+    cavity_cylinder = Pos(x_pos, 0, minimum_floor_thickness - 0.01) * Cylinder(
+        chamber_radius,
+        chamber_depth + bottom_bowl_sagitta + 0.02,
+        align=(Align.CENTER, Align.CENTER, Align.MIN),
+    )
+    cavity_sphere = Pos(x_pos, 0, bowl_center_z) * Sphere(bowl_radius)
+    curved_cavity = cavity_cylinder & cavity_sphere
+    body = (body - curved_cavity).clean()
 
 bottom_shell = body
 publish("bottom_shell", bottom_shell, "Bottom capsule half")

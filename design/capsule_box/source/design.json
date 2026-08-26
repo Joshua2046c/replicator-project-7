@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 146,
-  "sourceHash": "c2250a926f2225d0077b20e17269675ddcd6b9136b7242e6bd49c8237c6b7eb6",
+  "buildNumber": 147,
+  "sourceHash": "cd9f71afaf52aa36b44ee05425da780e145d4bf25ac7524f0f7545b2dd436cf9",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "0972a76fbbf79cb8b366cbe9aa9fefcc62b65fc7b0a053d9c37c22280d5a6a26"
+          "sha256": "f395b3eae5ee13494b718df488b7326c90baaa40c87481f89b1ff9380f0a4e26"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "37cd97ca43cfa2afe3c8dd94647dd7fa6139f4f49e4d78d9e5d3312f3c9e02fa",
+      "shapeHash": "aa5a37c9ab4ae8437cc98482ad51eb9ff22e62b21d6e243038a187c9cfc29e0c",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "cb2f883206feed3c3b1ac437bba0044c749fcdea82c674b9b188ed0b254a7c99",
+      "shapeHash": "37cf0c2fc90868767f9266f897ada5e3e13a0f6758ba5aa104d23d91e6cf160a",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "8addb821953bb45be2d5323654e31ed67ede89ec9da0e71865fb8d29ecde31c0",
+      "shapeHash": "8864fd116da37c7eec3133112097a70b32ce3be9cda2cc875f57ef48c46401bb",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-26T17:55:00.826Z",
+  "updatedAt": "2026-08-26T18:28:19.987Z",
   "parameters": {
     "bottom_half": {
       "overall_length": 80,
@@ -201,7 +201,8 @@
       "bottom_annulus_link_z": 14.6,
       "bottom_hinge_root_radius_v2": 3,
       "bottom_hinge_root_y_v2": 18,
-      "bottom_hinge_root_z_v2": 12.4
+      "bottom_hinge_root_z_v2": 12.4,
+      "bottom_bowl_sagitta": 0.4
     },
     "top_lid": {
       "overall_length": 80,
