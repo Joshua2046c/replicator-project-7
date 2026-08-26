@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 144,
-  "sourceHash": "e71bcb1fddcca734f9e34585bb8a97c7b52b4e84d397ec1f21dadb241e8eeef5",
+  "buildNumber": 146,
+  "sourceHash": "c2250a926f2225d0077b20e17269675ddcd6b9136b7242e6bd49c8237c6b7eb6",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "cdde0660e3e6f9ce4035319e58002b6eca11140f84ec6f4990c6cfece8f85a6c",
+      "shapeHash": "37cd97ca43cfa2afe3c8dd94647dd7fa6139f4f49e4d78d9e5d3312f3c9e02fa",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "bc23fa5f1b1529f93aaae3c0f4d91832385d1b8284237a00dc9dbbd8aa688922",
+      "shapeHash": "cb2f883206feed3c3b1ac437bba0044c749fcdea82c674b9b188ed0b254a7c99",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "e577c075c78a4acf3087fc102c026462129f4c545a6e8103682aa4f015717e3a",
+      "shapeHash": "8addb821953bb45be2d5323654e31ed67ede89ec9da0e71865fb8d29ecde31c0",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-26T17:11:45.542Z",
+  "updatedAt": "2026-08-26T17:55:00.826Z",
   "parameters": {
     "bottom_half": {
       "overall_length": 80,
@@ -164,8 +164,8 @@
       "center_recess_depth": 2,
       "center_recess_x": 0,
       "center_recess_y": 0,
-      "front_recess_diameter": 14,
-      "front_recess_depth": 2.4,
+      "front_recess_diameter": 12,
+      "front_recess_depth": 1.8,
       "front_recess_x": 0,
       "front_recess_z": 16,
       "hinge_root_fillet": 0.6,

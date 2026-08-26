@@ -62,6 +62,12 @@
       "source": "user_requested",
       "description": "用户标注的上盖双圆形内腔底面，要求增加浅弧度并适当加深，但不得超过上盖外拱起始高度",
       "path": "product/references/uploads/20260826T170708952Z-1-mark.png"
+    },
+    {
+      "id": "front_recess_alignment_markup",
+      "source": "user_requested",
+      "description": "用户标注的正面分割圆槽上下半圆尺寸不一致问题，要求上下统一为直径12mm、深1.8mm并共用全局圆心X=0、Z=16mm",
+      "path": "product/references/uploads/20260826T175219621Z-1-mark.png"
     }
   ],
   "assembly_story": {
@@ -79,7 +85,7 @@
         "delivery_target": "printable_part",
         "required_formats": ["step"],
         "interface_ids": ["hinge_pin_fit", "magnet_pockets", "top_lid_inner_bowls"],
-        "reference_ids": ["reference_image", "hinge_interference_markup", "lower_hinge_root_transition_markup", "hinge_root_thickness_markup", "hinge_inner_bridge_thickness_markup", "top_lid_inner_bowl_markup"]
+        "reference_ids": ["reference_image", "hinge_interference_markup", "lower_hinge_root_transition_markup", "hinge_root_thickness_markup", "hinge_inner_bridge_thickness_markup", "top_lid_inner_bowl_markup", "front_recess_alignment_markup"]
       }
     ]
   },
