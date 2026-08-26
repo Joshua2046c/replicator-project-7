@@ -24,13 +24,10 @@ hinge_knuckle_diameter = param("hinge_knuckle_diameter", 7.5)
 compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
-hinge_axis_y = param("hinge_axis_y", 23.0)
-hinge_neck_depth = param("hinge_neck_depth", 5.0)
-hinge_neck_height = param("hinge_neck_height", 3.0)
-hinge_root_fillet = param("hinge_root_fillet", 1.35)
-bottom_hinge_root_drop = param("bottom_hinge_root_drop", 6.0)
-bottom_hinge_root_pull = param("bottom_hinge_root_pull", 2.2)
-hinge_inner_wall_overlap = param("hinge_inner_wall_overlap", 0.7)
+hinge_axis_y = param("hinge_axis_y", 24.1)
+bottom_hinge_root_radius_v2 = param("bottom_hinge_root_radius_v2", 3.0)
+bottom_hinge_root_y_v2 = param("bottom_hinge_root_y_v2", 18.0)
+bottom_hinge_root_z_v2 = param("bottom_hinge_root_z_v2", 12.4)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -38,8 +35,11 @@ end_center = straight_length / 2
 chamber_radius = chamber_diameter / 2
 chamber_center = end_center
 side_x = compact_center_knuckle_width / 2 + hinge_axial_gap + compact_side_knuckle_width / 2
-hinge_span = 2 * compact_side_knuckle_width + compact_center_knuckle_width + 2 * hinge_axial_gap
-pin_hole_length = hinge_span + 1.0
+barrel_radius = hinge_knuckle_diameter / 2
+hole_radius = (hinge_pin_diameter + hinge_hole_clearance) / 2
+hinge_shell_clearance = hinge_axis_y - barrel_radius - outer_width / 2
+assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
+assert bottom_hinge_root_z_v2 + bottom_hinge_root_radius_v2 < bottom_height, "Lower root must remain below the mating plane"
 
 outer_body = Box(straight_length, outer_width, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
 outer_body = outer_body + Pos(-end_center, 0, 0) * Cylinder(outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
@@ -61,39 +61,20 @@ front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90
 )
 body = body - front_recess
 
-# The tangent teardrop extends into the rear shell wall so the pin-hole inner
-# side retains a structural bridge without moving the hinge axis or adding a rib.
-barrel_radius = hinge_knuckle_diameter / 2
-shell_wall_y = outer_width / 2 - hinge_inner_wall_overlap
-root_lower_z = bottom_height - bottom_hinge_root_drop
+# Each side knuckle is one watertight teardrop section: hull the complete barrel
+# and a root circle buried in the shell, then subtract the bore from the whole face.
 for x_pos in (-side_x, side_x):
-    with BuildSketch(Plane.YZ) as root_sketch:
-        with BuildLine():
-            Line((shell_wall_y, root_lower_z), (shell_wall_y, bottom_height))
-            Bezier(
-                (shell_wall_y, bottom_height),
-                (shell_wall_y + bottom_hinge_root_pull, bottom_height),
-                (hinge_axis_y - bottom_hinge_root_pull, bottom_height + barrel_radius),
-                (hinge_axis_y, bottom_height + barrel_radius),
-            )
-            ThreePointArc(
-                (hinge_axis_y, bottom_height + barrel_radius),
-                (hinge_axis_y + barrel_radius, bottom_height),
-                (hinge_axis_y, bottom_height - barrel_radius),
-            )
-            Bezier(
-                (hinge_axis_y, bottom_height - barrel_radius),
-                (hinge_axis_y - bottom_hinge_root_pull, bottom_height - barrel_radius),
-                (shell_wall_y, root_lower_z + bottom_hinge_root_pull),
-                (shell_wall_y, root_lower_z),
-            )
-        make_face()
+    with BuildSketch(Plane.YZ) as knuckle_sketch:
+        with Locations((hinge_axis_y, bottom_height)):
+            Circle(barrel_radius)
+        with Locations((bottom_hinge_root_y_v2, bottom_hinge_root_z_v2)):
+            Circle(bottom_hinge_root_radius_v2)
+        make_hull()
+        with Locations((hinge_axis_y, bottom_height)):
+            Circle(hole_radius, mode=Mode.SUBTRACT)
     x0 = x_pos - compact_side_knuckle_width / 2
-    root_profile = Pos(x0, 0, 0) * extrude(root_sketch.sketch, amount=compact_side_knuckle_width)
-    body = body + root_profile
+    knuckle = Pos(x0, 0, 0) * extrude(knuckle_sketch.sketch, amount=compact_side_knuckle_width)
+    body = (body + knuckle).clean()
 
-pin_hole = Pos(0, hinge_axis_y, bottom_height) * Rot(Y=90) * Cylinder(
-    (hinge_pin_diameter + hinge_hole_clearance) / 2, pin_hole_length, align=(Align.CENTER, Align.CENTER, Align.CENTER)
-)
-bottom_shell = body - pin_hole
+bottom_shell = body
 publish("bottom_shell", bottom_shell, "Bottom capsule half")

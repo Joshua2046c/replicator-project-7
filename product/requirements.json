@@ -29,6 +29,18 @@
       },
       "source": "default"
     },
+    "top_lid_inner_bowl_profile": {
+      "value": {
+        "count": 2,
+        "opening_diameter_mm": 35.6,
+        "edge_depth_mm": 3,
+        "center_additional_sagitta_mm": 2,
+        "center_max_depth_mm": 5,
+        "maximum_allowed_depth_mm": 12,
+        "surface": "continuous_shallow_spherical_bowl"
+      },
+      "source": "user"
+    },
     "wall_thickness_mm": {
       "value": 2.0,
       "source": "default"

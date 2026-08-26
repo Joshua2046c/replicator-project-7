@@ -10,7 +10,8 @@ dome_transition_fillet = param("dome_transition_fillet", 2.0)
 outer_top_fillet = param("outer_top_fillet", 15.0)
 inner_clearance = param("inner_clearance", 0.3)
 chamber_diameter = param("chamber_diameter", 35.0)
-relief_depth = param("relief_depth", 10.0)
+relief_depth = param("relief_depth", 3.0)
+inner_bowl_sagitta = param("inner_bowl_sagitta", 2.0)
 
 magnet_diameter = param("magnet_diameter", 6.0)
 magnet_depth = param("magnet_depth", 2.0)
@@ -27,21 +28,27 @@ hinge_knuckle_diameter = param("hinge_knuckle_diameter", 7.5)
 compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
 compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
 hinge_axial_gap = param("hinge_axial_gap", 0.3)
-hinge_axis_y = param("hinge_axis_y", 23.0)
-hinge_neck_depth = param("hinge_neck_depth", 5.0)
-hinge_neck_height = param("hinge_neck_height", 3.0)
-hinge_root_fillet = param("hinge_root_fillet", 3.5)
-top_hinge_root_rise = param("top_hinge_root_rise", 8.0)
-top_hinge_root_pull = param("top_hinge_root_pull", 2.2)
-hinge_inner_wall_overlap = param("hinge_inner_wall_overlap", 0.7)
-top_hinge_axial_end_fillet = param("top_hinge_axial_end_fillet", 0.4)
+hinge_axis_y = param("hinge_axis_y", 24.1)
+top_hinge_root_radius = param("top_hinge_root_radius", 2.6)
+top_hinge_root_y = param("top_hinge_root_y", 18.0)
+top_hinge_root_z = param("top_hinge_root_z", 3.6)
+top_hinge_parting_clearance = param("top_hinge_parting_clearance", 1.0)
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
 end_center = straight_length / 2
 chamber_center = end_center
-hinge_span = 2 * compact_side_knuckle_width + compact_center_knuckle_width + 2 * hinge_axial_gap
-pin_hole_length = hinge_span + 1.0
+barrel_radius = hinge_knuckle_diameter / 2
+hole_radius = (hinge_pin_diameter + hinge_hole_clearance) / 2
+barrel_inner_y = hinge_axis_y - barrel_radius
+hinge_shell_clearance = barrel_inner_y - outer_width / 2
+relief_radius = chamber_diameter / 2 + inner_clearance
+bowl_radius = (relief_radius ** 2 + inner_bowl_sagitta ** 2) / (2 * inner_bowl_sagitta)
+bowl_center_z = relief_depth + inner_bowl_sagitta - bowl_radius
+bowl_max_depth = relief_depth + inner_bowl_sagitta
+assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
+assert inner_bowl_sagitta > 0, "Inner bowl sagitta must be positive"
+assert bowl_max_depth <= dome_base_height, "Inner bowl must not extend above the outer dome transition height"
 
 outer_body = Box(
     straight_length,
@@ -60,14 +67,17 @@ top_edges = [edge for edge in outer_body.edges() if abs(edge.center().Z - lid_he
 if top_edges:
     outer_body = fillet(top_edges, radius=outer_top_fillet)
 
-relief_radius = chamber_diameter / 2 + inner_clearance
+# Each chamber keeps the original circular opening and edge depth, while a large
+# spherical cutter raises the center by the sagitta to create a shallow bowl.
 for x_pos in (-chamber_center, chamber_center):
-    relief = Pos(x_pos, 0, -0.01) * Cylinder(
+    relief_cylinder = Pos(x_pos, 0, -0.01) * Cylinder(
         relief_radius,
-        relief_depth + 0.01,
+        bowl_max_depth + 0.02,
         align=(Align.CENTER, Align.CENTER, Align.MIN),
     )
-    outer_body = outer_body - relief
+    relief_sphere = Pos(x_pos, 0, bowl_center_z) * Sphere(bowl_radius)
+    curved_relief = relief_cylinder & relief_sphere
+    outer_body = outer_body - curved_relief
 
 magnet_pocket = Pos(0, -magnet_y_from_center, -0.01) * Cylinder(
     magnet_diameter / 2,
@@ -87,48 +97,23 @@ front_recess = Pos(
 )
 body = body - front_recess
 
-# Extend the tangent teardrop into the rear shell for the inner bridge, then
-# soften only its axial end edges so the center knuckle has no hard shoulder.
-barrel_radius = hinge_knuckle_diameter / 2
-shell_wall_y = outer_width / 2 - hinge_inner_wall_overlap
-root_upper_z = top_hinge_root_rise
-with BuildSketch(Plane.YZ) as root_sketch:
-    with BuildLine():
-        Line((shell_wall_y, root_upper_z), (shell_wall_y, 0))
-        Bezier(
-            (shell_wall_y, 0),
-            (shell_wall_y + top_hinge_root_pull, 0),
-            (hinge_axis_y - top_hinge_root_pull, -barrel_radius),
-            (hinge_axis_y, -barrel_radius),
-        )
-        ThreePointArc(
-            (hinge_axis_y, -barrel_radius),
-            (hinge_axis_y + barrel_radius, 0),
-            (hinge_axis_y, barrel_radius),
-        )
-        Bezier(
-            (hinge_axis_y, barrel_radius),
-            (hinge_axis_y - top_hinge_root_pull, barrel_radius),
-            (shell_wall_y, root_upper_z - top_hinge_root_pull),
-            (shell_wall_y, root_upper_z),
-        )
-    make_face()
-root_transition = Pos(-compact_center_knuckle_width / 2, 0, 0) * extrude(
-    root_sketch.sketch, amount=compact_center_knuckle_width
+# Mirror the lower construction: hull the complete barrel with a root circle
+# buried in the lid shell, then relieve only the inner area near the parting plane.
+with BuildSketch(Plane.YZ) as outer_sketch:
+    with Locations((hinge_axis_y, 0)):
+        Circle(barrel_radius)
+    with Locations((top_hinge_root_y, top_hinge_root_z)):
+        Circle(top_hinge_root_radius)
+    make_hull()
+    relief_max_y = barrel_inner_y - 0.02
+    relief_width = 30.0
+    relief_height = 20.0
+    with Locations((relief_max_y - relief_width / 2, top_hinge_parting_clearance - relief_height / 2)):
+        Rectangle(relief_width, relief_height, mode=Mode.SUBTRACT)
+    with Locations((hinge_axis_y, 0)):
+        Circle(hole_radius, mode=Mode.SUBTRACT)
+center_knuckle = Pos(-compact_center_knuckle_width / 2, 0, 0) * extrude(
+    outer_sketch.sketch, amount=compact_center_knuckle_width
 )
-root_end_x = compact_center_knuckle_width / 2
-axial_end_edges = [
-    edge for edge in root_transition.edges()
-    if abs(abs(edge.center().X) - root_end_x) < 0.02
-]
-if axial_end_edges:
-    root_transition = fillet(axial_end_edges, radius=top_hinge_axial_end_fillet)
-lid_with_hinge = body + root_transition
-
-pin_hole = Pos(0, hinge_axis_y, 0) * Rot(Y=90) * Cylinder(
-    (hinge_pin_diameter + hinge_hole_clearance) / 2,
-    pin_hole_length,
-    align=(Align.CENTER, Align.CENTER, Align.CENTER),
-)
-top_lid = lid_with_hinge - pin_hole
+top_lid = (body + center_knuckle).clean()
 publish("top_lid", top_lid, "Top capsule lid")
