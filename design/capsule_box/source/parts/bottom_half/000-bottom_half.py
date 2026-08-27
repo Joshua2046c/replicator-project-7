@@ -1,36 +1,42 @@
-# Bottom half with rounded exterior base, compact external hinge, and split front recess
+# Scaled bottom half with flat chambers, small floor fillets, mating tongue, and a broad rounded hinge blend
 from build123d import *
 
-overall_length = param("overall_length", 80.0)
-outer_width = param("outer_width", 40.0)
-bottom_height = param("bottom_height", 16.0)
-bottom_outer_fillet = param("bottom_outer_fillet", 2.0)
-chamber_diameter = param("chamber_diameter", 35.0)
-chamber_depth = param("chamber_depth", 10.0)
-wall_thickness = param("wall_thickness", 2.0)
-bottom_bowl_sagitta = param("bottom_bowl_sagitta", 0.4)
+target_chamber_diameter = param("target_chamber_diameter", 45.0)
+scale_factor = target_chamber_diameter / 35.0
+magnet_diameter_v2 = param("magnet_diameter_v2", 8.0)
+magnet_depth_v2 = param("magnet_depth_v2", 3.0)
+chamber_floor_fillet = param("chamber_floor_fillet", 0.8)
+mating_step_height = param("mating_step_height", 3.5)
+mating_step_width = param("mating_step_width", 1.4)
+mating_step_clearance = param("mating_step_clearance", 0.3)
+mating_step_setback = param("mating_step_setback", 0.8)
+bottom_hinge_blend_center_y = param("bottom_hinge_blend_center_y", 27.0)
+bottom_hinge_blend_center_z = param("bottom_hinge_blend_center_z", 16.0)
+bottom_hinge_blend_y_radius = param("bottom_hinge_blend_y_radius", 6.5)
+bottom_hinge_blend_z_radius = param("bottom_hinge_blend_z_radius", 4.0)
 
-magnet_diameter = param("magnet_diameter", 6.0)
-magnet_depth = param("magnet_depth", 2.0)
-magnet_y_from_center = param("magnet_y_from_center", 12.5)
-
-front_recess_diameter = param("front_recess_diameter", 12.0)
-front_recess_depth = param("front_recess_depth", 1.8)
-front_recess_x = param("front_recess_x", 0.0)
-front_recess_z = param("front_recess_z", bottom_height)
-
-hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
-hinge_hole_clearance = param("hinge_hole_clearance", 0.3)
-hinge_knuckle_diameter = param("hinge_knuckle_diameter", 7.5)
-compact_side_knuckle_width = param("compact_side_knuckle_width", 8.0)
-compact_center_knuckle_width = param("compact_center_knuckle_width", 14.4)
-hinge_axial_gap = param("hinge_axial_gap", 0.3)
-hinge_axis_y = param("hinge_axis_y", 24.1)
-bottom_hinge_root_y_radius_v5 = param("bottom_hinge_root_y_radius_v5", 2.8)
-bottom_hinge_root_z_radius_v5 = param("bottom_hinge_root_z_radius_v5", 2.4)
-bottom_hinge_root_y_v5 = param("bottom_hinge_root_y_v5", 20.8)
-bottom_hinge_root_z_v5 = param("bottom_hinge_root_z_v5", 13.2)
-bottom_hinge_parting_clearance_v3 = param("bottom_hinge_parting_clearance_v3", 0.4)
+chamber_diameter = 35.0 * scale_factor
+outer_width = 40.0 * scale_factor
+overall_length = 80.0 * scale_factor
+bottom_height = 16.0 * scale_factor
+wall_thickness = 2.0 * scale_factor
+magnet_y_from_center = 12.5  # Current design default; fixed magnet-interface exception.
+front_recess_diameter = 12.0 * scale_factor
+front_recess_depth = 1.8 * scale_factor
+front_recess_x = 0.0
+front_recess_z = bottom_height
+hinge_pin_diameter = 3.0 * scale_factor
+hinge_hole_clearance = 0.3 * scale_factor
+hinge_knuckle_diameter = 7.5 * scale_factor
+compact_side_knuckle_width = 8.0 * scale_factor
+compact_center_knuckle_width = 14.4 * scale_factor
+hinge_axial_gap = 0.3 * scale_factor
+hinge_axis_y = 24.1 * scale_factor
+bottom_hinge_root_y_radius = 2.8 * scale_factor
+bottom_hinge_root_z_radius = 2.4 * scale_factor
+bottom_hinge_root_y = 20.8 * scale_factor
+bottom_hinge_root_z = 13.2 * scale_factor
+bottom_hinge_parting_clearance = 0.4 * scale_factor
 
 outer_radius = outer_width / 2
 straight_length = overall_length - outer_width
@@ -42,62 +48,114 @@ barrel_radius = hinge_knuckle_diameter / 2
 hole_radius = (hinge_pin_diameter + hinge_hole_clearance) / 2
 barrel_inner_y = hinge_axis_y - barrel_radius
 hinge_shell_clearance = barrel_inner_y - outer_width / 2
-minimum_floor_thickness = wall_thickness - bottom_bowl_sagitta
-bowl_radius = (chamber_radius ** 2 + bottom_bowl_sagitta ** 2) / (2 * bottom_bowl_sagitta)
-bowl_center_z = minimum_floor_thickness + bowl_radius
-root_top_z = bottom_hinge_root_z_v5 + bottom_hinge_root_z_radius_v5
-root_inner_y = bottom_hinge_root_y_v5 - bottom_hinge_root_y_radius_v5
-root_outer_y = bottom_hinge_root_y_v5 + bottom_hinge_root_y_radius_v5
+flat_floor_z = wall_thickness
+flat_chamber_depth = bottom_height - flat_floor_z
+root_top_z = bottom_hinge_root_z + bottom_hinge_root_z_radius
+root_inner_y = bottom_hinge_root_y - bottom_hinge_root_y_radius
+root_outer_y = bottom_hinge_root_y + bottom_hinge_root_y_radius
 root_to_axis_y = hinge_axis_y - root_outer_y
-assert hinge_shell_clearance >= 0.3, "Closed hinge barrel must clear the opposite shell rear wall"
-assert root_top_z <= bottom_height - bottom_hinge_parting_clearance_v3, "Lower hinge root must remain below the mating plane"
+blend_min_y = bottom_hinge_blend_center_y - bottom_hinge_blend_y_radius
+blend_max_y = bottom_hinge_blend_center_y + bottom_hinge_blend_y_radius
+blend_min_z = bottom_hinge_blend_center_z - bottom_hinge_blend_z_radius
+blend_max_z = bottom_hinge_blend_center_z + bottom_hinge_blend_z_radius
+
+assert abs(target_chamber_diameter - 45.0) < 1e-6, "Scaled chamber target must be 45 mm"
+assert hinge_shell_clearance >= 0.3 * scale_factor, "Scaled hinge barrel must clear the opposite shell rear wall"
+assert root_top_z <= bottom_height - bottom_hinge_parting_clearance + 1e-6, "Lower hinge root must remain below the mating plane"
 assert root_inner_y < outer_width / 2, "Lower hinge root must overlap the shell rear wall"
 assert root_to_axis_y < barrel_radius, "Lower hinge root must overlap the complete hinge barrel"
-assert bottom_bowl_sagitta > 0, "Bottom bowl sagitta must be positive"
-assert minimum_floor_thickness >= 1.6, "PLA bottom floor must remain at least 1.6 mm thick"
+assert flat_floor_z >= 2.0, "Flat chamber floor must retain structural PLA thickness"
+assert flat_chamber_depth > chamber_floor_fillet, "Flat chamber must have room for the floor transition"
+assert chamber_floor_fillet > 0 and chamber_floor_fillet < flat_floor_z, "Chamber floor fillet must fit within the floor thickness"
+assert chamber_radius + chamber_floor_fillet < outer_radius - mating_step_setback, "Tongue must remain outside the storage chamber"
+assert blend_min_y < outer_width / 2, "Rounded lower hinge blend must overlap the shell rear wall"
+assert blend_max_y > hinge_axis_y - barrel_radius, "Rounded lower hinge blend must overlap the barrel"
+assert blend_min_z < bottom_height, "Rounded lower hinge blend must reach the shell"
+assert blend_max_z <= bottom_height - bottom_hinge_parting_clearance + 1e-6, "Rounded lower hinge blend must stay below the mating plane"
+assert mating_step_height >= 3.0 and mating_step_height <= 4.0, "Mating step height must stay within 3-4 mm"
+assert mating_step_width > 0, "Mating step width must be positive"
+assert mating_step_clearance > 0, "Mating step clearance must be positive"
+assert mating_step_setback > mating_step_clearance, "Mating tongue setback must exceed clearance"
 
-outer_body = Box(straight_length, outer_width, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
-outer_body = outer_body + Pos(-end_center, 0, 0) * Cylinder(outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
-outer_body = outer_body + Pos(end_center, 0, 0) * Cylinder(outer_radius, bottom_height, align=(Align.CENTER, Align.CENTER, Align.MIN))
+
+def capsule_prism(height, inset=0.0, z=0.0):
+    radius = outer_radius - inset
+    width = outer_width - 2 * inset
+    assert radius > 0 and width > 0, "Capsule inset must leave positive geometry"
+    shape = Box(straight_length, width, height, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    shape = shape + Pos(-end_center, 0, 0) * Cylinder(
+        radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    )
+    shape = shape + Pos(end_center, 0, 0) * Cylinder(
+        radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    )
+    return Pos(0, 0, z) * shape
+
+
+outer_body = capsule_prism(bottom_height)
 bottom_perimeter = [edge for edge in outer_body.edges() if abs(edge.center().Z) < 0.01]
-body = fillet(bottom_perimeter, radius=bottom_outer_fillet)
+body = fillet(bottom_perimeter, radius=2.0 * scale_factor)
 
-magnet_pocket = Pos(0, -magnet_y_from_center, bottom_height - magnet_depth) * Cylinder(
-    magnet_diameter / 2, magnet_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
+with BuildSketch(Plane.XY) as magnet_sketch:
+    with Locations((0, -magnet_y_from_center)):
+        Circle(magnet_diameter_v2 / 2)
+magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(
+    magnet_sketch.sketch,
+    amount=magnet_depth_v2,
 )
 body = body - magnet_pocket
 
 front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90) * Cylinder(
-    front_recess_diameter / 2, front_recess_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    front_recess_diameter / 2,
+    front_recess_depth,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
 body = body - front_recess
 
-# Each lower knuckle combines a complete barrel with one low elliptical root.
-# The ellipse is buried in the shell and overlaps the barrel below the pin bore,
-# creating one continuous rounded load path without entering the mating plane.
+# The sleeve and its broad rounded root are fused before the bore is cut.
 for x_pos in (-side_x, side_x):
-    with BuildSketch(Plane.YZ) as knuckle_sketch:
+    with BuildSketch(Plane.YZ) as barrel_sketch:
         with Locations((hinge_axis_y, bottom_height)):
             Circle(barrel_radius)
-        with Locations((bottom_hinge_root_y_v5, bottom_hinge_root_z_v5)):
-            Ellipse(bottom_hinge_root_y_radius_v5, bottom_hinge_root_z_radius_v5)
-        with Locations((hinge_axis_y, bottom_height)):
-            Circle(hole_radius, mode=Mode.SUBTRACT)
+    with BuildSketch(Plane.YZ) as blend_sketch:
+        with Locations((bottom_hinge_blend_center_y, bottom_hinge_blend_center_z)):
+            Ellipse(bottom_hinge_blend_y_radius, bottom_hinge_blend_z_radius)
+    barrel = extrude(barrel_sketch.sketch, amount=compact_side_knuckle_width)
+    blend = extrude(blend_sketch.sketch, amount=compact_side_knuckle_width)
     x0 = x_pos - compact_side_knuckle_width / 2
-    knuckle = Pos(x0, 0, 0) * extrude(knuckle_sketch.sketch, amount=compact_side_knuckle_width)
-    body = (body + knuckle).clean()
+    hinge_solid = Pos(x0, 0, 0) * (barrel + blend)
+    bore = Pos(x0, 0, 0) * extrude(
+        barrel_sketch.sketch,
+        amount=compact_side_knuckle_width,
+    )
+    with BuildSketch(Plane.YZ) as bore_sketch:
+        with Locations((hinge_axis_y, bottom_height)):
+            Circle(hole_radius)
+    bore = Pos(x0, 0, 0) * extrude(bore_sketch.sketch, amount=compact_side_knuckle_width)
+    body = (body + hinge_solid - bore).clean()
 
-# Cut the storage chambers after the hinge fusion. This keeps the chamber rear
-# walls continuous and preserves the shallow 0.4 mm bowl profile.
+# Flat-bottom storage chambers; the cutting tools start at the structural floor plane.
 for x_pos in (-chamber_center, chamber_center):
-    cavity_cylinder = Pos(x_pos, 0, minimum_floor_thickness - 0.01) * Cylinder(
+    cavity = Pos(x_pos, 0, flat_floor_z) * Cylinder(
         chamber_radius,
-        chamber_depth + bottom_bowl_sagitta + 0.02,
+        flat_chamber_depth + 0.02,
         align=(Align.CENTER, Align.CENTER, Align.MIN),
     )
-    cavity_sphere = Pos(x_pos, 0, bowl_center_z) * Sphere(bowl_radius)
-    curved_cavity = cavity_cylinder & cavity_sphere
-    body = (body - curved_cavity).clean()
+    floor_edges = [edge for edge in cavity.edges() if abs(edge.center().Z - flat_floor_z) < 0.02]
+    if floor_edges:
+        cavity = fillet(floor_edges, radius=chamber_floor_fillet)
+    body = (body - cavity).clean()
+
+# Continuous lower tongue, matched to the upper groove with 0.3 mm radial clearance.
+tongue_z = bottom_height - 0.01
+tongue_outer = capsule_prism(mating_step_height + 0.01, mating_step_setback, tongue_z)
+tongue_inner = capsule_prism(
+    mating_step_height + 0.01,
+    mating_step_setback + mating_step_width,
+    tongue_z,
+)
+tongue = tongue_outer - tongue_inner
+body = (body + tongue).clean()
 
 bottom_shell = body
 publish("bottom_shell", bottom_shell, "Bottom capsule half")

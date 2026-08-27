@@ -14,51 +14,63 @@
     },
     "overall_dimensions_mm": {
       "value": {
-        "length": 80,
-        "width": 46,
-        "height": 32,
-        "body_width": 40
+        "nominal_length": 102.8571,
+        "nominal_width_including_hinge": 59.1429,
+        "nominal_closed_height": 41.1429,
+        "body_width": 51.4286,
+        "scale_factor": 1.285714,
+        "cad_envelope_reference": [102.3337, 61.5211, 41.1429]
       },
       "source": "user"
     },
     "chamber_dimensions": {
       "value": {
-        "diameter": 35,
-        "depth": 20,
-        "count": 2
+        "diameter": 45,
+        "depth": 25.7143,
+        "count": 2,
+        "scale_basis": "45/35"
       },
-      "source": "default"
+      "source": "user"
+    },
+    "chamber_floor_geometry": {
+      "value": {
+        "bottom_surface": "flat",
+        "top_surface": "flat",
+        "wall_transition": "small_fillet",
+        "corner_radius_mm": 0.8,
+        "hinge_breakthrough": "not_allowed"
+      },
+      "source": "user"
     },
     "top_lid_inner_bowl_profile": {
       "value": {
         "count": 2,
-        "opening_diameter_mm": 35.6,
-        "edge_depth_mm": 3,
-        "center_additional_sagitta_mm": 2,
-        "center_max_depth_mm": 5,
-        "maximum_allowed_depth_mm": 12,
-        "surface": "continuous_shallow_spherical_bowl"
+        "surface": "flat_floor_with_small_wall_transition_fillet",
+        "edge_depth_mm": 3.8571,
+        "center_sagitta_mm": 0,
+        "maximum_depth_mm": 3.8571
       },
       "source": "user"
     },
     "bottom_chamber_bowl_profile": {
       "value": {
         "count": 2,
-        "surface": "continuous_slight_shallow_spherical_bowl",
+        "surface": "flat_floor_with_small_wall_transition_fillet",
+        "center_sagitta_mm": 0,
         "hinge_breakthrough": "not_allowed_in_storage_chamber_walls"
       },
       "source": "user"
     },
-    "bottom_chamber_bowl_geometry": {
-      "value": {
-        "center_additional_sagitta_mm": 0.4,
-        "minimum_floor_thickness_mm": 1.6
-      },
+    "wall_thickness_mm": {
+      "value": 2.5714,
       "source": "default"
     },
-    "wall_thickness_mm": {
-      "value": 2.0,
-      "source": "default"
+    "outer_wall_profile": {
+      "value": {
+        "top_lid_vertical_land_above_front_half_round_mm": 3,
+        "transition": "rounded_after_vertical_land"
+      },
+      "source": "user"
     },
     "hinge_mechanism": {
       "value": {
@@ -78,14 +90,21 @@
     },
     "hinge_strength_geometry": {
       "value": {
-        "knuckle_outer_diameter_mm": 7.5,
-        "pin_hole_diameter_mm": 3.3,
-        "radial_material_mm": 2.1,
-        "bottom_root_connection_height_mm": 6,
-        "top_root_connection_height_mm": 8,
-        "inner_wall_overlap_mm": 0.7,
-        "effective_inner_bridge_mm": 2.05,
-        "bottom_root_parting_clearance_mm": 0.4
+        "knuckle_outer_diameter_mm": 9.6429,
+        "pin_hole_diameter_mm": 4.2429,
+        "radial_material_mm": 2.7,
+        "bottom_root_connection_height_mm": 7.7143,
+        "top_root_connection_height_mm": 10.2857,
+        "inner_wall_overlap_mm": 0.9,
+        "effective_inner_bridge_mm": 2.6357,
+        "bottom_root_parting_clearance_mm": 0.5143,
+        "axial_axis_y_mm": 30.9857,
+        "axial_axis_z_mm": 20.5714,
+        "side_knuckle_width_mm": 10.2857,
+        "center_knuckle_width_mm": 18.5143,
+        "axial_gap_mm": 0.3857,
+        "pin_diameter_mm": 3.8571,
+        "pin_length_mm": 39.8571
       },
       "source": "default"
     },
@@ -96,23 +115,43 @@
     "magnet_specs": {
       "value": {
         "type": "neodymium_disc",
-        "diameter_mm": 6,
-        "thickness_mm": 2,
+        "diameter_mm": 8,
+        "thickness_mm": 3,
         "quantity": 2,
-        "placement": "one_centered_in_each_half"
+        "placement": "one_centered_in_each_half",
+        "scaling": "fixed_exception_to_45mm_chamber_scale"
       },
       "source": "user"
     },
+    "magnet_center_position": {
+      "value": {
+        "center_y_mm": 12.5,
+        "status": "current_design_default"
+      },
+      "source": "default"
+    },
     "front_recess_specs": {
       "value": {
-        "diameter_mm": 12,
-        "depth_mm": 1.8,
+        "diameter_mm": 15.4286,
+        "depth_mm": 2.3143,
         "quantity": 1,
         "placement": "split_across_bottom_and_top_lid_at_closed_mating_plane",
         "center_x_mm": 0,
-        "center_z_mm": 16,
-        "front_y_mm": -20,
+        "center_z_mm": 20.5714,
+        "front_y_mm": -25.7143,
         "halves": "bottom_lower_semicircle_and_top_upper_semicircle"
+      },
+      "source": "user"
+    },
+    "mating_step_interface": {
+      "value": {
+        "type": "perimeter_tongue_and_groove",
+        "bottom": "continuous_perimeter_tongue",
+        "top": "matching_recess",
+        "nominal_engagement_height_mm": 3.5,
+        "allowed_height_range_mm": [3, 4],
+        "assembly_clearance_mm_per_side": 0.3,
+        "chamber_intrusion": "not_allowed"
       },
       "source": "user"
     },
@@ -122,11 +161,11 @@
     },
     "exterior_edge_profile": {
       "value": {
-        "bottom_outer_fillet_mm": 2,
+        "bottom_outer_fillet_mm": 2.5714,
         "top_outer_fillet_mm": 0,
-        "lid_profile": "continuous_crown_sagitta_4mm",
-        "mating_faces": "planar",
-        "lid_center_rise_mm": 4
+        "lid_profile": "rounded_after_3mm_vertical_land",
+        "mating_faces": "stepped_tongue_and_groove",
+        "lid_center_rise_mm": 5.1429
       },
       "source": "user"
     },
