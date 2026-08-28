@@ -1,4 +1,4 @@
-# Scaled bottom half with matched flat chamber, aligned front recess, and hinge sweep clearance
+# Scaled bottom half with a direct planar transition into the hinge barrel
 from build123d import *
 
 target_chamber_diameter = param("target_chamber_diameter", 45.0)
@@ -12,6 +12,9 @@ mating_step_clearance = param("mating_step_clearance", 0.3)
 mating_step_setback = param("mating_step_setback", 0.8)
 hinge_step_relief_width = param("hinge_step_relief_width", 63.0)
 front_recess_depth = param("front_recess_depth", 2.0)
+front_recess_floor_thickness = param("front_recess_floor_thickness", 0.25)
+front_recess_floor_embed = param("front_recess_floor_embed", 0.5)
+front_step_relief_clearance = param("front_step_relief_clearance", 0.4)
 
 chamber_diameter = 35.0 * scale_factor
 outer_width = 40.0 * scale_factor
@@ -48,22 +51,26 @@ barrel_inner_y = hinge_axis_y - barrel_radius
 hinge_shell_clearance = barrel_inner_y - outer_width / 2
 flat_floor_z = wall_thickness
 flat_chamber_depth = bottom_height - flat_floor_z
-root_top_z = bottom_hinge_root_z + bottom_hinge_root_z_radius
-root_inner_y = bottom_hinge_root_y - bottom_hinge_root_y_radius
-root_outer_y = bottom_hinge_root_y + bottom_hinge_root_y_radius
-root_to_axis_y = hinge_axis_y - root_outer_y
+root_start_y = outer_width / 2 - bottom_hinge_root_y_radius
+root_end_y = hinge_axis_y + barrel_radius
+root_top_z = bottom_height - bottom_hinge_parting_clearance
+root_bottom_z = root_top_z - 2 * bottom_hinge_root_z_radius
 
 assert abs(target_chamber_diameter - 45.0) < 1e-6, "Scaled chamber target must be 45 mm"
 assert abs(flat_chamber_depth - 18.0) < 1e-6, "Lower chamber effective depth must be 18 mm"
 assert hinge_shell_clearance >= 0.3 * scale_factor, "Scaled hinge barrel must clear the opposite shell rear wall"
 assert root_top_z <= bottom_height - bottom_hinge_parting_clearance + 1e-6, "Lower hinge root must remain below the mating plane"
-assert root_inner_y < outer_width / 2, "Lower hinge root must overlap the shell rear wall"
-assert root_to_axis_y < barrel_radius, "Lower hinge root must overlap the complete hinge barrel"
+assert root_start_y < outer_width / 2, "Lower hinge bridge must overlap the shell rear wall"
+assert root_end_y > hinge_axis_y, "Lower hinge bridge must overlap the complete hinge barrel"
+assert root_bottom_z >= 0, "Lower hinge bridge must remain inside the lower shell envelope"
 assert flat_floor_z >= 2.0, "Flat chamber floor must retain structural PLA thickness"
 assert flat_chamber_depth > chamber_floor_fillet, "Flat chamber must have room for the floor transition"
 assert chamber_floor_fillet > 0 and chamber_floor_fillet < flat_floor_z, "Chamber floor fillet must fit within the floor thickness"
 assert chamber_radius + chamber_floor_fillet < outer_radius - mating_step_setback, "Tongue must remain outside the storage chamber"
 assert front_recess_depth > 0, "Front recess depth must be positive"
+assert front_recess_floor_thickness > 0 and front_recess_floor_thickness < 0.8, "Front recess floor must be printable and shallow"
+assert front_recess_floor_embed > 0 and front_recess_floor_embed <= 1.0, "Front recess relief overlap must be positive"
+assert front_step_relief_clearance > 0, "Front step relief clearance must be positive"
 assert mating_step_height >= 3.0 and mating_step_height <= 4.0, "Mating step height must stay within 3-4 mm"
 assert mating_step_width > 0, "Mating step width must be positive"
 assert mating_step_clearance > 0, "Mating step clearance must be positive"
@@ -91,10 +98,12 @@ with BuildSketch(Plane.XY) as magnet_sketch:
 magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(magnet_sketch.sketch, amount=magnet_depth_v2)
 body = body - magnet_pocket
 
-# Enter beyond the front skin and stop at the exact 2 mm planar floor datum.
+# Keep the 2 mm front recess datum.
 front_recess_start_y = -outer_width / 2 - front_recess_entry_overcut
 front_recess = Pos(front_recess_x, front_recess_start_y, front_recess_z) * Rot(X=-90) * Cylinder(
-    front_recess_diameter / 2, front_recess_depth + front_recess_entry_overcut, align=(Align.CENTER, Align.CENTER, Align.MIN)
+    front_recess_diameter / 2,
+    front_recess_depth + front_recess_entry_overcut + 2.0,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
 body = body - front_recess
 
@@ -102,14 +111,18 @@ for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as hinge_outer_sketch:
         with Locations((hinge_axis_y, bottom_height)):
             Circle(barrel_radius)
-        with Locations((bottom_hinge_root_y, bottom_hinge_root_z)):
-            Ellipse(bottom_hinge_root_y_radius, bottom_hinge_root_z_radius)
-        make_hull()
     with BuildSketch(Plane.YZ) as hinge_bore_sketch:
         with Locations((hinge_axis_y, bottom_height)):
             Circle(hole_radius)
     x0 = x_pos - compact_side_knuckle_width / 2
-    hinge_outer = Pos(x0, 0, 0) * extrude(hinge_outer_sketch.sketch, amount=compact_side_knuckle_width)
+    hinge_barrel = Pos(x0, 0, 0) * extrude(hinge_outer_sketch.sketch, amount=compact_side_knuckle_width)
+    hinge_bridge = Pos(x0, root_start_y, root_bottom_z) * Box(
+        compact_side_knuckle_width,
+        root_end_y - root_start_y,
+        root_top_z - root_bottom_z,
+        align=(Align.MIN, Align.MIN, Align.MIN),
+    )
+    hinge_outer = hinge_barrel + hinge_bridge
     hinge_bore = Pos(x0, 0, 0) * extrude(hinge_bore_sketch.sketch, amount=compact_side_knuckle_width)
     body = (body + hinge_outer - hinge_bore).clean()
 
@@ -120,7 +133,7 @@ for x_pos in (-chamber_center, chamber_center):
         cavity = fillet(floor_edges, radius=chamber_floor_fillet)
     body = (body - cavity).clean()
 
-# Keep the front locating tongue; the rear 63 mm hinge band is a continuous flat mating plane from Y=0 to the rear edge.
+# Keep the front locating tongue only outside the circular recess footprint.
 tongue_z = bottom_height - 0.01
 tongue_height = mating_step_height + 0.01
 tongue_outer = capsule_prism(tongue_height, mating_step_setback, tongue_z)
@@ -129,6 +142,14 @@ tongue = tongue_outer - tongue_inner
 rear_flat_zone = Pos(0, 0, tongue_z) * Box(hinge_step_relief_width, outer_width / 2, tongue_height, align=(Align.CENTER, Align.MIN, Align.MIN))
 tongue = tongue - rear_flat_zone
 body = (body + tongue).clean()
+
+# Remove the locating tongue through the front circular footprint; the rear remains solid.
+front_step_relief = Pos(front_recess_x, front_recess_start_y, front_recess_z) * Rot(X=-90) * Cylinder(
+    front_recess_diameter / 2 + front_step_relief_clearance,
+    front_recess_depth + front_recess_entry_overcut + 2.0,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
+)
+body = (body - front_step_relief).clean()
 
 bottom_shell = body
 publish("bottom_shell", bottom_shell, "Bottom capsule half")
