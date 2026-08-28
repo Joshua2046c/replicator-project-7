@@ -1,0 +1,161 @@
+{
+  "designId": "capsule_box",
+  "buildNumber": 166,
+  "sourceHash": "cd8123d3bf522ca6ebb5d9b67337a0b8fe1487e35dc777f10181c6579ca5f34e",
+  "schemaVersion": 2,
+  "exportId": "export-809c3b945bafd7a058bfd055849ff834",
+  "generatedAt": "2026-08-28T07:27:42.149Z",
+  "designSha256": "f65a73d2b8251b584f303b03346cc3bdbb265d9e75976b02a57f54e9ec211eb8",
+  "role": "capsule_box",
+  "stateHash": "7ddf17eea576a4ad77d253495f3757241cd2d14bcee8beb6335b5feb45095fe6",
+  "stateManifest": {
+    "schemaVersion": 2,
+    "designId": "capsule_box",
+    "role": "capsule_box",
+    "design": {
+      "buildNumber": 166,
+      "sourceHash": "cd8123d3bf522ca6ebb5d9b67337a0b8fe1487e35dc777f10181c6579ca5f34e",
+      "designSha256": "a0cccd8ed1598192e649fe55b81e3edaca3644f9eaf7ece93fce62bd3e97c478",
+      "manifestSha256": "27a9006ef884f926c28016317cafa21d3e3b922dda6cf1ccf4da2265a65dd29a",
+      "stepSha256": "bb011ae34121be84dd93799f728635f797a3828889a1e502df328d353b7f7c92",
+      "pcbReleases": []
+    },
+    "brief": {
+      "path": "design/capsule_box/README.md",
+      "sha256": "aa35c305ee0adbf3dc8ff7cfcb905d725ec4fd41525cb3a7df154acf913e1ce2"
+    },
+    "requirement": {
+      "artifactContractPath": "product/contract.json",
+      "artifactContractSha256": "9cad00121254ecd568fbc32825ed175c6c042e90039cc739e3bb720f01937c80",
+      "designRequirementSha256": "9001237874eeebf1339afd5ded18cb3feb479c12fcb1c595c119be49cc1cc0b3",
+      "inputs": [
+        {
+          "role": "external-reference",
+          "id": "bottom_bowls_hinge_breakthrough_markup",
+          "path": "product/references/uploads/20260826T181548829Z-1-mark.png",
+          "sha256": "c81ecf5356d259a6f6bbe15212a209d429008df04ddf9eb22b95aa58f650f530",
+          "sizeBytes": 136353
+        },
+        {
+          "role": "external-reference",
+          "id": "bottom_hinge_closure_slope_markup",
+          "path": "product/references/uploads/20260826T184121318Z-1-mark.png",
+          "sha256": "f6d657f939c4e8b5272b1ea209fd524ad6d63605ffb9fde8dc232bd9715d3b80",
+          "sizeBytes": 114451
+        },
+        {
+          "role": "external-reference",
+          "id": "front_recess_alignment_markup",
+          "path": "product/references/uploads/20260826T175219621Z-1-mark.png",
+          "sha256": "0af4ce5c39a6df1be6b4d7445b35064321d5c0b0b0404ba7ea020ee3375f8cbc",
+          "sizeBytes": 65251
+        },
+        {
+          "role": "external-reference",
+          "id": "hinge_inner_bridge_thickness_markup",
+          "path": "product/references/uploads/20260826T051138169Z-1-mark.png",
+          "sha256": "30082283996b23be278e9ed55687f4e5f3bd8cac6fa3149ea9e19a7ac13458e5",
+          "sizeBytes": 89829
+        },
+        {
+          "role": "external-reference",
+          "id": "hinge_interference_markup",
+          "path": "product/references/uploads/20260820T134535570Z-1-mark.png",
+          "sha256": "e572b057a94479c83602e119d1309dd7b30adfe7e2c597e5b9396d76fbacd319",
+          "sizeBytes": 59701
+        },
+        {
+          "role": "external-reference",
+          "id": "hinge_root_thickness_markup",
+          "path": "product/references/uploads/20260826T045043189Z-1-mark.png",
+          "sha256": "534e22437bc2b69a553ce870047702cfc0b5691a5bc7ee866d99dc0073b46b86",
+          "sizeBytes": 79586
+        },
+        {
+          "role": "external-reference",
+          "id": "latest_mating_step_markup",
+          "path": "product/references/uploads/20260827T111617440Z-1-mark.png",
+          "sha256": "20402e9be329745186ff478d23315065f9904abaa7ac6529a6e70ec5aea87059",
+          "sizeBytes": 78998
+        },
+        {
+          "role": "external-reference",
+          "id": "lower_hinge_root_transition_markup",
+          "path": "product/references/uploads/20260826T040428168Z-1-mark.png",
+          "sha256": "46bb6e7b9308abce0e540a01a3c693a95cf5f888e7443b0a12ba5c141ca68ec4",
+          "sizeBytes": 71394
+        },
+        {
+          "role": "external-reference",
+          "id": "reference_image",
+          "path": "product/references/uploads/20260820T115359700Z-1-1.jpg",
+          "sha256": "9ef71f9cc259ee646b8cb3296d9a3f231c17cfb70dd4c72fa281f2e63b2c7aa1",
+          "sizeBytes": 228010
+        },
+        {
+          "role": "external-reference",
+          "id": "top_lid_inner_bowl_markup",
+          "path": "product/references/uploads/20260826T170708952Z-1-mark.png",
+          "sha256": "39da6a518f91b9ddfc0bcae96886d906a46e949164c1cad39993da6880996cb4",
+          "sizeBytes": 36105
+        }
+      ]
+    },
+    "delivery": {
+      "target": "printable_part",
+      "formats": [
+        "step"
+      ]
+    },
+    "stateHash": "7ddf17eea576a4ad77d253495f3757241cd2d14bcee8beb6335b5feb45095fe6"
+  },
+  "buildArtifacts": {
+    "manifestSha256": "27a9006ef884f926c28016317cafa21d3e3b922dda6cf1ccf4da2265a65dd29a",
+    "stepSha256": "bb011ae34121be84dd93799f728635f797a3828889a1e502df328d353b7f7c92"
+  },
+  "exportAlgorithm": {
+    "version": 1,
+    "bootstrapSha256": "5f0758541796c7327b21765cf64e32cb03b44afe6492e136c22a12699c767320"
+  },
+  "sourceHashes": {
+    "bottom_half/bottom_half": "716840bbf53f24c1f22a9ab14866a2c160ad225c6706da35e01d0ab60130c376",
+    "hinge_pin/hinge_pin": "739a3a0d12371e11c08c6496f0f6e4bd805cda6aa68651960722242fa2a8a1fd",
+    "top_lid/top_lid": "e6b3ecc28e98b9c3187e0c9cdd61cc1568562ff05ffff1fb86b888a5875d593c"
+  },
+  "assetHashes": {},
+  "shapeHashes": {
+    "bottom_shell": "dfcc0ceb5dc333b19f662bffd1c70da38a25ad8e77c7c8314c7783c7cba4d3e6",
+    "hinge_pin": "d88731a126ff8f16f4bbdfcddb9468052df55b6856ed60c8175e6f888b324ef7",
+    "top_lid": "b69d697e94222fc0637db2e5feaff0e0201d913d5529f0c3f9e40fcdbc98c2be"
+  },
+  "runtime": {
+    "manifestHash": "8f80d16e43e1264a8b0945c7acac4f311af14f4c2bdc69f1c63c5d7b9cd45a72",
+    "pythonVersion": "3.12.13",
+    "build123dVersion": "0.10.0",
+    "ocpVersion": "7.8.1.1.post1",
+    "cadpyHash": "d0f8abd6889b78c2644eed1279611fc7db7c2c60c21adc7b2ca388ba3f5135da"
+  },
+  "artifacts": [
+    {
+      "path": "manufacturing/capsule_box/releases/export-809c3b945bafd7a058bfd055849ff834/model.step",
+      "role": "model/step",
+      "sha256": "bb011ae34121be84dd93799f728635f797a3828889a1e502df328d353b7f7c92",
+      "sizeBytes": 308389
+    }
+  ],
+  "authority": {
+    "version": 1,
+    "algorithm": "hmac-sha256",
+    "keyId": "bb9ad085400f88ed636678f836d2b7d1",
+    "projectId": "3024157f-5c82-4f64-a69c-342f90cfc768",
+    "receiptPath": "manufacturing/capsule_box/releases/export-809c3b945bafd7a058bfd055849ff834/receipt.json",
+    "payloadSha256": "e6eae647d1330a76ab7213f6d0525088349bd937cfc0de5b7916b8ea94088b00",
+    "mac": "0d8118d194be1e04da8c72ac358f4de42d04081592fd67562c0e7461b37471c9"
+  },
+  "status": "reviewed",
+  "review": {
+    "reviewId": "review-166-5e42e79c-30e1-467a-89af-d4d62ea80426",
+    "path": ".work/builds/cad/capsule_box/reviews/review-166-5e42e79c-30e1-467a-89af-d4d62ea80426/receipt.json",
+    "sha256": "18b5183b87a1bf3c7a4d8271a40bdbda5ecb683cb52f9b4ab5bc10e38755e07e"
+  }
+}

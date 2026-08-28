@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 165,
-  "sourceHash": "fbbba4e4a0891c06b0f91ad36bad4add305003c2817e4cbbaa33d0bfc49c137a",
+  "buildNumber": 166,
+  "sourceHash": "cd8123d3bf522ca6ebb5d9b67337a0b8fe1487e35dc777f10181c6579ca5f34e",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "b0c173915d46c71ff4321f9f0488eff82bc72641589a14e0b3bbcee48322ce55"
+          "sha256": "716840bbf53f24c1f22a9ab14866a2c160ad225c6706da35e01d0ab60130c376"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "c8c3fdc8b3eb7f4a4ec4fdd076b01e5702524c17923b601628c192201f7b8fc0",
+      "shapeHash": "dfcc0ceb5dc333b19f662bffd1c70da38a25ad8e77c7c8314c7783c7cba4d3e6",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "bd5ffb24a890ec3a8ec49de3c16408870c10883862d22f65cd53da8a3cb62ade",
+      "shapeHash": "b69d697e94222fc0637db2e5feaff0e0201d913d5529f0c3f9e40fcdbc98c2be",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "fc05e98b12e848b657f084b3853f23e99f49997e9e5559958ddf408a329ecafb",
+      "shapeHash": "d88731a126ff8f16f4bbdfcddb9468052df55b6856ed60c8175e6f888b324ef7",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-27T14:12:55.152Z",
+  "updatedAt": "2026-08-28T07:27:42.149Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,

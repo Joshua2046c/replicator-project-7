@@ -75,7 +75,7 @@
     "hinge_mechanism": {
       "value": {
         "type": "printed_structure_with_metal_pin",
-        "root_transition": "continuous_large_radius_profile_from_both_shells_into_hinge_barrels",
+      "root_transition": "continuous_large_radius_profile_from_both_shells_into_hinge_barrels_with_matching_mirrored_upper_and_lower_sections",
         "root_connection": "thickened_without_thin_neck_or_inner_bridge",
         "inner_bridge_requirement": "pin_hole_inner_edge_to_shell_must_not_form_thin_wall",
         "closed_root_requirement": "bottom_hinge_root_must_remain_below_mating_plane_without_rising_slope_interference",
