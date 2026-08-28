@@ -22,6 +22,7 @@ magnet_y_from_center = 12.5
 front_recess_diameter = 12.0 * scale_factor
 front_recess_x = 0.0
 front_recess_z = bottom_height
+front_recess_entry_overcut = 0.05
 hinge_pin_diameter = 3.0 * scale_factor
 hinge_hole_clearance = 0.3 * scale_factor
 hinge_knuckle_diameter = 7.5 * scale_factor
@@ -90,8 +91,10 @@ with BuildSketch(Plane.XY) as magnet_sketch:
 magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(magnet_sketch.sketch, amount=magnet_depth_v2)
 body = body - magnet_pocket
 
-front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90) * Cylinder(
-    front_recess_diameter / 2, front_recess_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
+# Enter beyond the front skin and stop at the exact 2 mm planar floor datum.
+front_recess_start_y = -outer_width / 2 - front_recess_entry_overcut
+front_recess = Pos(front_recess_x, front_recess_start_y, front_recess_z) * Rot(X=-90) * Cylinder(
+    front_recess_diameter / 2, front_recess_depth + front_recess_entry_overcut, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
 body = body - front_recess
 
@@ -111,9 +114,7 @@ for x_pos in (-side_x, side_x):
     body = (body + hinge_outer - hinge_bore).clean()
 
 for x_pos in (-chamber_center, chamber_center):
-    cavity = Pos(x_pos, 0, flat_floor_z) * Cylinder(
-        chamber_radius, flat_chamber_depth + 0.02, align=(Align.CENTER, Align.CENTER, Align.MIN)
-    )
+    cavity = Pos(x_pos, 0, flat_floor_z) * Cylinder(chamber_radius, flat_chamber_depth + 0.02, align=(Align.CENTER, Align.CENTER, Align.MIN))
     floor_edges = [edge for edge in cavity.edges() if abs(edge.center().Z - flat_floor_z) < 0.02]
     if floor_edges:
         cavity = fillet(floor_edges, radius=chamber_floor_fillet)
@@ -125,9 +126,7 @@ tongue_height = mating_step_height + 0.01
 tongue_outer = capsule_prism(tongue_height, mating_step_setback, tongue_z)
 tongue_inner = capsule_prism(tongue_height, mating_step_setback + mating_step_width, tongue_z)
 tongue = tongue_outer - tongue_inner
-rear_flat_zone = Pos(0, 0, tongue_z) * Box(
-    hinge_step_relief_width, outer_width / 2, tongue_height, align=(Align.CENTER, Align.MIN, Align.MIN)
-)
+rear_flat_zone = Pos(0, 0, tongue_z) * Box(hinge_step_relief_width, outer_width / 2, tongue_height, align=(Align.CENTER, Align.MIN, Align.MIN))
 tongue = tongue - rear_flat_zone
 body = (body + tongue).clean()
 

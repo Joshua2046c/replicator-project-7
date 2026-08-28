@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 187,
-  "sourceHash": "f360dc421a768494ac507768b8b0723c5a44c35de3f8fcf4e989669be12f6ef1",
+  "buildNumber": 191,
+  "sourceHash": "c9bbb1d9d6ca69ccc3c6894c19a91498c3145538ab6334904bab5b93eb4c1219",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "4154cd512264c06e44c7b6284dda26e612697833fbe9635e11649da60b6def4c"
+          "sha256": "e734ffc652d89569e6c315664f2e6ee6f25a83ec60455a6f9ea0f9eedb331372"
         }
       ],
       "dependencies": []
@@ -28,7 +28,7 @@
           "target": "top_lid",
           "order": 0,
           "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
-          "sha256": "1a4da7aeabb0ee449a7d2e6c9faa33ca7a3e2c9164fea569c95254dadd93c7f2"
+          "sha256": "08c487ad1951b62074281faaa59a887f69e5ce60d0debdc7d9af8c951a7e3cde"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "197fdb0d42af99c9f04a9523adb81e10b2d61cf6e6c945d236cc85e367380d2d",
+      "shapeHash": "5a3ced0900aabeb559f320a6aea5c1544e2d8b567286ce5cf292c0e5e75ca0be",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "2512e5b98ce0b4ffde4672975454bd0b94996498b119d69fed7278a3f39f908e",
+      "shapeHash": "2033968d45672c2b08276c10a1ac73be41e7fdfc568ed386f85d1a7555be521b",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "f141ea6364b1e21a4f7ff04a5e046f3c06fc464c7ff27eb10aaa1f439b3fcd53",
+      "shapeHash": "93a821324e884d92eccce411d9d449ee4c5ee75ca07a4ffc391693811bc6dbf0",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-28T17:57:28.390Z",
+  "updatedAt": "2026-08-28T18:50:31.036Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,
@@ -148,7 +148,8 @@
       "bottom_hinge_root_y": 27.5,
       "bottom_hinge_root_y_radius": 2,
       "bottom_hinge_root_z_radius": 2.4,
-      "hinge_step_relief_width": 63
+      "hinge_step_relief_width": 63,
+      "front_recess_floor_bridge_thickness": 0.08
     },
     "top_lid": {
       "target_chamber_diameter": 45,

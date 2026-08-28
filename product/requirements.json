@@ -141,7 +141,9 @@
         "center_z_mm": 20.5714,
         "front_y_mm": -25.7143,
         "halves": "bottom_lower_semicircle_and_top_upper_semicircle",
-        "upper_and_lower_depth_match": true
+        "upper_and_lower_depth_match": true,
+        "floor": "single_continuous_flat_plane_after_assembly",
+        "seam_height_difference_mm": 0
       },
       "source": "user"
     },

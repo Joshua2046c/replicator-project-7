@@ -28,6 +28,7 @@ magnet_y_from_center = 12.5
 front_recess_diameter = 12.0 * scale_factor
 front_recess_x = 0.0
 front_recess_z = 0.0
+front_recess_entry_overcut = 0.05
 hinge_pin_diameter = 3.0 * scale_factor
 hinge_hole_clearance = 0.3 * scale_factor
 hinge_knuckle_diameter = 7.5 * scale_factor
@@ -68,6 +69,7 @@ assert mating_step_width > 0, "Mating step width must be positive"
 assert mating_step_clearance > 0, "Mating step clearance must be positive"
 assert hinge_step_relief_width >= outer_width, "Rear hinge relief must cover the complete capsule rear arc"
 assert hinge_step_relief_width < overall_length, "Rear hinge relief must leave front locating step material"
+assert front_recess_depth + front_recess_entry_overcut > front_recess_entry_overcut, "Front recess cutter must terminate at its 2 mm floor"
 
 
 def capsule_prism(height, inset=0.0, z=0.0):
@@ -99,8 +101,12 @@ with BuildSketch(Plane.XY) as magnet_sketch:
 magnet_pocket = Pos(0, 0, -0.01) * extrude(magnet_sketch.sketch, amount=magnet_depth_v2 + 0.01)
 body = outer_body - magnet_pocket
 
-front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90) * Cylinder(
-    front_recess_diameter / 2, front_recess_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
+# Use the same over-entry cutter as the lower half so both floor surfaces share one depth datum.
+front_recess_start_y = -outer_width / 2 - front_recess_entry_overcut
+front_recess = Pos(front_recess_x, front_recess_start_y, front_recess_z) * Rot(X=-90) * Cylinder(
+    front_recess_diameter / 2,
+    front_recess_depth + front_recess_entry_overcut,
+    align=(Align.CENTER, Align.CENTER, Align.MIN),
 )
 body = body - front_recess
 
