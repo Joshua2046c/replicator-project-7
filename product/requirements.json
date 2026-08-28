@@ -134,25 +134,29 @@
     "front_recess_specs": {
       "value": {
         "diameter_mm": 15.4286,
-        "depth_mm": 2.3143,
+        "depth_mm": 2.0,
         "quantity": 1,
         "placement": "split_across_bottom_and_top_lid_at_closed_mating_plane",
         "center_x_mm": 0,
         "center_z_mm": 20.5714,
         "front_y_mm": -25.7143,
-        "halves": "bottom_lower_semicircle_and_top_upper_semicircle"
+        "halves": "bottom_lower_semicircle_and_top_upper_semicircle",
+        "upper_and_lower_depth_match": true
       },
       "source": "user"
     },
     "mating_step_interface": {
       "value": {
-        "type": "perimeter_tongue_and_groove",
-        "bottom": "continuous_perimeter_tongue",
-        "top": "matching_recess",
+        "type": "front_locating_tongue_and_groove_with_rear_flat_interface",
+        "front_bottom": "locating_tongue",
+        "front_top": "matching_recess",
+        "rear_hinge_relief_width_mm": 63.0,
+        "rear_interface": "continuous_flat_solid_plane_without_step_or_void",
         "nominal_engagement_height_mm": 3.5,
         "allowed_height_range_mm": [3, 4],
         "assembly_clearance_mm_per_side": 0.3,
-        "chamber_intrusion": "not_allowed"
+        "chamber_intrusion": "not_allowed",
+        "hinge_clearance_reason": "remove_step_at_hinge_to_prevent_binding"
       },
       "source": "user"
     },

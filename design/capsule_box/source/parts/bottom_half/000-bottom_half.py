@@ -10,14 +10,15 @@ mating_step_height = param("mating_step_height", 3.5)
 mating_step_width = param("mating_step_width", 1.4)
 mating_step_clearance = param("mating_step_clearance", 0.3)
 mating_step_setback = param("mating_step_setback", 0.8)
-front_recess_depth = param("front_recess_depth", 2.3142857143)
+hinge_step_relief_width = param("hinge_step_relief_width", 63.0)
+front_recess_depth = param("front_recess_depth", 2.0)
 
 chamber_diameter = 35.0 * scale_factor
 outer_width = 40.0 * scale_factor
 overall_length = 80.0 * scale_factor
 bottom_height = 16.0 * scale_factor
 wall_thickness = 2.0 * scale_factor
-magnet_y_from_center = 12.5  # Current design default; fixed magnet-interface exception.
+magnet_y_from_center = 12.5
 front_recess_diameter = 12.0 * scale_factor
 front_recess_x = 0.0
 front_recess_z = bottom_height
@@ -28,7 +29,6 @@ compact_side_knuckle_width = 8.0 * scale_factor
 compact_center_knuckle_width = 14.4 * scale_factor
 hinge_axial_gap = 0.3 * scale_factor
 hinge_axis_y = 24.1 * scale_factor
-# Match the top-lid root section exactly in Y and in both ellipse radii.
 bottom_hinge_root_y = param("bottom_hinge_root_y", 27.5)
 bottom_hinge_root_y_radius = param("bottom_hinge_root_y_radius", 2.0)
 bottom_hinge_root_z_radius = param("bottom_hinge_root_z_radius", 2.4)
@@ -62,11 +62,13 @@ assert flat_floor_z >= 2.0, "Flat chamber floor must retain structural PLA thick
 assert flat_chamber_depth > chamber_floor_fillet, "Flat chamber must have room for the floor transition"
 assert chamber_floor_fillet > 0 and chamber_floor_fillet < flat_floor_z, "Chamber floor fillet must fit within the floor thickness"
 assert chamber_radius + chamber_floor_fillet < outer_radius - mating_step_setback, "Tongue must remain outside the storage chamber"
-assert abs(front_recess_depth - 2.3142857143) < 1e-6, "Front recess depth must match the upper half"
+assert front_recess_depth > 0, "Front recess depth must be positive"
 assert mating_step_height >= 3.0 and mating_step_height <= 4.0, "Mating step height must stay within 3-4 mm"
 assert mating_step_width > 0, "Mating step width must be positive"
 assert mating_step_clearance > 0, "Mating step clearance must be positive"
 assert mating_step_setback > mating_step_clearance, "Mating tongue setback must exceed clearance"
+assert hinge_step_relief_width >= outer_width, "Rear hinge relief must cover the complete capsule rear arc"
+assert hinge_step_relief_width < overall_length, "Rear hinge relief must leave front locating step material"
 
 
 def capsule_prism(height, inset=0.0, z=0.0):
@@ -74,14 +76,9 @@ def capsule_prism(height, inset=0.0, z=0.0):
     width = outer_width - 2 * inset
     assert radius > 0 and width > 0, "Capsule inset must leave positive geometry"
     shape = Box(straight_length, width, height, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    shape = shape + Pos(-end_center, 0, 0) * Cylinder(
-        radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN)
-    )
-    shape = shape + Pos(end_center, 0, 0) * Cylinder(
-        radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN)
-    )
+    shape = shape + Pos(-end_center, 0, 0) * Cylinder(radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    shape = shape + Pos(end_center, 0, 0) * Cylinder(radius, height, align=(Align.CENTER, Align.CENTER, Align.MIN))
     return Pos(0, 0, z) * shape
-
 
 outer_body = capsule_prism(bottom_height)
 bottom_perimeter = [edge for edge in outer_body.edges() if abs(edge.center().Z) < 0.01]
@@ -90,21 +87,14 @@ body = fillet(bottom_perimeter, radius=2.0 * scale_factor)
 with BuildSketch(Plane.XY) as magnet_sketch:
     with Locations((0, -magnet_y_from_center)):
         Circle(magnet_diameter_v2 / 2)
-magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(
-    magnet_sketch.sketch,
-    amount=magnet_depth_v2,
-)
+magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(magnet_sketch.sketch, amount=magnet_depth_v2)
 body = body - magnet_pocket
 
-# Same circular cutter as the upper half; both front semicircles therefore have identical depth.
 front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90) * Cylinder(
-    front_recess_diameter / 2,
-    front_recess_depth,
-    align=(Align.CENTER, Align.CENTER, Align.MIN),
+    front_recess_diameter / 2, front_recess_depth, align=(Align.CENTER, Align.CENTER, Align.MIN)
 )
 body = body - front_recess
 
-# Match the top lid's continuous circular-barrel plus elliptical-root hull.
 for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as hinge_outer_sketch:
         with Locations((hinge_axis_y, bottom_height)):
@@ -116,37 +106,29 @@ for x_pos in (-side_x, side_x):
         with Locations((hinge_axis_y, bottom_height)):
             Circle(hole_radius)
     x0 = x_pos - compact_side_knuckle_width / 2
-    hinge_outer = Pos(x0, 0, 0) * extrude(
-        hinge_outer_sketch.sketch,
-        amount=compact_side_knuckle_width,
-    )
-    hinge_bore = Pos(x0, 0, 0) * extrude(
-        hinge_bore_sketch.sketch,
-        amount=compact_side_knuckle_width,
-    )
+    hinge_outer = Pos(x0, 0, 0) * extrude(hinge_outer_sketch.sketch, amount=compact_side_knuckle_width)
+    hinge_bore = Pos(x0, 0, 0) * extrude(hinge_bore_sketch.sketch, amount=compact_side_knuckle_width)
     body = (body + hinge_outer - hinge_bore).clean()
 
-# Flat-bottom storage chambers; the cutting tools start at the structural floor plane.
 for x_pos in (-chamber_center, chamber_center):
     cavity = Pos(x_pos, 0, flat_floor_z) * Cylinder(
-        chamber_radius,
-        flat_chamber_depth + 0.02,
-        align=(Align.CENTER, Align.CENTER, Align.MIN),
+        chamber_radius, flat_chamber_depth + 0.02, align=(Align.CENTER, Align.CENTER, Align.MIN)
     )
     floor_edges = [edge for edge in cavity.edges() if abs(edge.center().Z - flat_floor_z) < 0.02]
     if floor_edges:
         cavity = fillet(floor_edges, radius=chamber_floor_fillet)
     body = (body - cavity).clean()
 
-# Continuous lower tongue, matched to the upper groove with 0.3 mm radial clearance.
+# Keep the front locating tongue; the rear 63 mm hinge band is a continuous flat mating plane from Y=0 to the rear edge.
 tongue_z = bottom_height - 0.01
-tongue_outer = capsule_prism(mating_step_height + 0.01, mating_step_setback, tongue_z)
-tongue_inner = capsule_prism(
-    mating_step_height + 0.01,
-    mating_step_setback + mating_step_width,
-    tongue_z,
-)
+tongue_height = mating_step_height + 0.01
+tongue_outer = capsule_prism(tongue_height, mating_step_setback, tongue_z)
+tongue_inner = capsule_prism(tongue_height, mating_step_setback + mating_step_width, tongue_z)
 tongue = tongue_outer - tongue_inner
+rear_flat_zone = Pos(0, 0, tongue_z) * Box(
+    hinge_step_relief_width, outer_width / 2, tongue_height, align=(Align.CENTER, Align.MIN, Align.MIN)
+)
+tongue = tongue - rear_flat_zone
 body = (body + tongue).clean()
 
 bottom_shell = body
