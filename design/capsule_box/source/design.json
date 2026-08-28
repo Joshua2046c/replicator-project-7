@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 166,
-  "sourceHash": "cd8123d3bf522ca6ebb5d9b67337a0b8fe1487e35dc777f10181c6579ca5f34e",
+  "buildNumber": 175,
+  "sourceHash": "ce68d4e2fb0b9c04bd07e1d5f40d7a04077d6e1f0ccd38b30c95638d75a62ee0",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +14,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "716840bbf53f24c1f22a9ab14866a2c160ad225c6706da35e01d0ab60130c376"
+          "sha256": "634c26346f002b430e371b0152e67020cf9c24562d9e45b538aeb5f0dd0f68c7"
         }
       ],
       "dependencies": []
@@ -28,7 +28,7 @@
           "target": "top_lid",
           "order": 0,
           "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
-          "sha256": "e6b3ecc28e98b9c3187e0c9cdd61cc1568562ff05ffff1fb86b888a5875d593c"
+          "sha256": "075f110ab355d8327f7576ace09e4c28e785e4ee70be8d5a1f111dd55a53fc7e"
         }
       ],
       "dependencies": []
@@ -54,7 +54,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "dfcc0ceb5dc333b19f662bffd1c70da38a25ad8e77c7c8314c7783c7cba4d3e6",
+      "shapeHash": "6786bab690c3fcf667cd496f4218b3f93b92beb5cf2a32fe8289ccd11e54b65b",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +80,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "b69d697e94222fc0637db2e5feaff0e0201d913d5529f0c3f9e40fcdbc98c2be",
+      "shapeHash": "88aadb999a95dfe675626fb53cf2f2aa52ef0cb93b0c760d81bd807758d15c54",
       "transform": {
         "positionMm": [
           0,
@@ -106,7 +106,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "d88731a126ff8f16f4bbdfcddb9468052df55b6856ed60c8175e6f888b324ef7",
+      "shapeHash": "9d0362aca9df69e063a3314221f6036d3bbd0e6332fdbcec4f2526bb783f4753",
       "transform": {
         "positionMm": [
           0,
@@ -129,7 +129,7 @@
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-28T07:27:42.149Z",
+  "updatedAt": "2026-08-28T17:10:16.807Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,
@@ -143,7 +143,11 @@
       "bottom_hinge_blend_center_y": 27,
       "bottom_hinge_blend_center_z": 16,
       "bottom_hinge_blend_y_radius": 6.5,
-      "bottom_hinge_blend_z_radius": 4
+      "bottom_hinge_blend_z_radius": 4,
+      "front_recess_depth": 2.3142857143,
+      "bottom_hinge_root_y": 27.5,
+      "bottom_hinge_root_y_radius": 2,
+      "bottom_hinge_root_z_radius": 2.4
     },
     "top_lid": {
       "target_chamber_diameter": 45,
@@ -154,7 +158,13 @@
       "mating_step_height": 3.5,
       "mating_step_width": 1.4,
       "mating_step_clearance": 0.3,
-      "mating_step_setback": 0.8
+      "mating_step_setback": 0.8,
+      "chamber_depth": 18,
+      "front_recess_depth": 2.3142857142857145,
+      "top_hinge_root_y": 27.5,
+      "top_hinge_root_y_radius": 2,
+      "top_hinge_root_z": 3,
+      "top_hinge_root_z_radius": 2.4
     },
     "hinge_pin": {
       "hinge_pin_diameter": 3.8571428571,

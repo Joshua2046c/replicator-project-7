@@ -1,4 +1,4 @@
-# Scaled bottom half with flat chambers, mating tongue, and a hinge profile mirrored from the top lid
+# Scaled bottom half with matched flat chamber, aligned front recess, and hinge sweep clearance
 from build123d import *
 
 target_chamber_diameter = param("target_chamber_diameter", 45.0)
@@ -10,6 +10,7 @@ mating_step_height = param("mating_step_height", 3.5)
 mating_step_width = param("mating_step_width", 1.4)
 mating_step_clearance = param("mating_step_clearance", 0.3)
 mating_step_setback = param("mating_step_setback", 0.8)
+front_recess_depth = param("front_recess_depth", 2.3142857143)
 
 chamber_diameter = 35.0 * scale_factor
 outer_width = 40.0 * scale_factor
@@ -18,7 +19,6 @@ bottom_height = 16.0 * scale_factor
 wall_thickness = 2.0 * scale_factor
 magnet_y_from_center = 12.5  # Current design default; fixed magnet-interface exception.
 front_recess_diameter = 12.0 * scale_factor
-front_recess_depth = 1.8 * scale_factor
 front_recess_x = 0.0
 front_recess_z = bottom_height
 hinge_pin_diameter = 3.0 * scale_factor
@@ -28,11 +28,11 @@ compact_side_knuckle_width = 8.0 * scale_factor
 compact_center_knuckle_width = 14.4 * scale_factor
 hinge_axial_gap = 0.3 * scale_factor
 hinge_axis_y = 24.1 * scale_factor
-bottom_hinge_root_y_radius = 2.8 * scale_factor
-bottom_hinge_root_z_radius = 2.4 * scale_factor
-bottom_hinge_root_y = 20.8 * scale_factor
-# Mirror the top-lid root about the mating plane: top local root is +2.85 mm.
-bottom_hinge_root_z = bottom_height - 2.85 * scale_factor
+# Match the top-lid root section exactly in Y and in both ellipse radii.
+bottom_hinge_root_y = param("bottom_hinge_root_y", 27.5)
+bottom_hinge_root_y_radius = param("bottom_hinge_root_y_radius", 2.0)
+bottom_hinge_root_z_radius = param("bottom_hinge_root_z_radius", 2.4)
+bottom_hinge_root_z = bottom_height - 3.0
 bottom_hinge_parting_clearance = 0.4 * scale_factor
 
 outer_radius = outer_width / 2
@@ -53,15 +53,16 @@ root_outer_y = bottom_hinge_root_y + bottom_hinge_root_y_radius
 root_to_axis_y = hinge_axis_y - root_outer_y
 
 assert abs(target_chamber_diameter - 45.0) < 1e-6, "Scaled chamber target must be 45 mm"
+assert abs(flat_chamber_depth - 18.0) < 1e-6, "Lower chamber effective depth must be 18 mm"
 assert hinge_shell_clearance >= 0.3 * scale_factor, "Scaled hinge barrel must clear the opposite shell rear wall"
 assert root_top_z <= bottom_height - bottom_hinge_parting_clearance + 1e-6, "Lower hinge root must remain below the mating plane"
-assert root_top_z >= bottom_height - (2.85 + 2.4) * scale_factor - 1e-6, "Lower hinge root must mirror the upper profile"
 assert root_inner_y < outer_width / 2, "Lower hinge root must overlap the shell rear wall"
 assert root_to_axis_y < barrel_radius, "Lower hinge root must overlap the complete hinge barrel"
 assert flat_floor_z >= 2.0, "Flat chamber floor must retain structural PLA thickness"
 assert flat_chamber_depth > chamber_floor_fillet, "Flat chamber must have room for the floor transition"
 assert chamber_floor_fillet > 0 and chamber_floor_fillet < flat_floor_z, "Chamber floor fillet must fit within the floor thickness"
 assert chamber_radius + chamber_floor_fillet < outer_radius - mating_step_setback, "Tongue must remain outside the storage chamber"
+assert abs(front_recess_depth - 2.3142857143) < 1e-6, "Front recess depth must match the upper half"
 assert mating_step_height >= 3.0 and mating_step_height <= 4.0, "Mating step height must stay within 3-4 mm"
 assert mating_step_width > 0, "Mating step width must be positive"
 assert mating_step_clearance > 0, "Mating step clearance must be positive"
@@ -95,6 +96,7 @@ magnet_pocket = Pos(0, 0, bottom_height - magnet_depth_v2) * extrude(
 )
 body = body - magnet_pocket
 
+# Same circular cutter as the upper half; both front semicircles therefore have identical depth.
 front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90) * Cylinder(
     front_recess_diameter / 2,
     front_recess_depth,
@@ -102,8 +104,7 @@ front_recess = Pos(front_recess_x, -outer_width / 2, front_recess_z) * Rot(X=-90
 )
 body = body - front_recess
 
-# Use the exact same circular-barrel plus elliptical-root hull as the top lid,
-# mirrored about the mating plane and then bored to the same pin diameter.
+# Match the top lid's continuous circular-barrel plus elliptical-root hull.
 for x_pos in (-side_x, side_x):
     with BuildSketch(Plane.YZ) as hinge_outer_sketch:
         with Locations((hinge_axis_y, bottom_height)):

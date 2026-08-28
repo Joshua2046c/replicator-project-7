@@ -26,7 +26,8 @@
     "chamber_dimensions": {
       "value": {
         "diameter": 45,
-        "depth": 25.7143,
+        "depth": 18.0,
+        "top_and_bottom_depth_match": true,
         "count": 2,
         "scale_basis": "45/35"
       },
@@ -46,9 +47,9 @@
       "value": {
         "count": 2,
         "surface": "flat_floor_with_small_wall_transition_fillet",
-        "edge_depth_mm": 3.8571,
+        "edge_depth_mm": 18.0,
         "center_sagitta_mm": 0,
-        "maximum_depth_mm": 3.8571
+        "maximum_depth_mm": 18.0
       },
       "source": "user"
     },
