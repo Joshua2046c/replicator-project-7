@@ -2,7 +2,7 @@
 from build123d import *
 
 hinge_pin_diameter = param("hinge_pin_diameter", 3.0)
-hinge_pin_length = param("hinge_pin_length", 29.4)
+hinge_pin_length = param("hinge_pin_length", 29.41)  # revised compact pin length
 
 pin = Cylinder(
     hinge_pin_diameter / 2,

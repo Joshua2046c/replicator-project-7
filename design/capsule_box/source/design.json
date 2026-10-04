@@ -1,7 +1,5 @@
 {
   "schemaVersion": 1,
-  "buildNumber": 210,
-  "sourceHash": "de1d14b9e1c38d4ffb9c2a2969543d6e677d27b633ca28ba2f1320b2e223eedd",
   "units": "mm",
   "coordinateFrame": "replicator-world-z-up",
   "targets": [
@@ -14,7 +12,7 @@
           "target": "bottom_half",
           "order": 0,
           "path": "design/capsule_box/source/parts/bottom_half/000-bottom_half.py",
-          "sha256": "4940d04ea40826272686051a016a856018989af7ee79d5a64723a5055682cd67"
+          "sha256": "24283370e2c5cf721e869d38248aa7cf4bf1d01fca9b17d7f1c88fe2cda550b8"
         }
       ],
       "dependencies": []
@@ -28,7 +26,7 @@
           "target": "top_lid",
           "order": 0,
           "path": "design/capsule_box/source/parts/top_lid/000-top_lid.py",
-          "sha256": "021b4d1d59d82b88c11aa71ff019a9adbb97448c140e3267d1e82dd654f1848c"
+          "sha256": "fc206e0d2ed8481b813c997d31b4ae7e03e6c913dac055c51053ab8e9b2f5007"
         }
       ],
       "dependencies": []
@@ -42,7 +40,21 @@
           "target": "hinge_pin",
           "order": 0,
           "path": "design/capsule_box/source/parts/hinge_pin/000-hinge_pin.py",
-          "sha256": "739a3a0d12371e11c08c6496f0f6e4bd805cda6aa68651960722242fa2a8a1fd"
+          "sha256": "a72b3ad8037e1b682ab8840e42f84d59331caf0eaf8977c8f56887240afc75f6"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "front_badge",
+      "label": "front_badge",
+      "cells": [
+        {
+          "id": "front_badge",
+          "target": "front_badge",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/front_badge/000-front_badge.py",
+          "sha256": "83aff6dd5eb1943d5b016a33d4516ae8f6a6a8272c9c18259d8bd3e2b8d4e197"
         }
       ],
       "dependencies": []
@@ -54,7 +66,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "09540094d8f694e0c013184419d8df7f03930834fbed03ab1eb373b41b075469",
+      "shapeHash": "447b9d6892b3c105061342c207c71fa8bcebd251e5342a4b8200b5d863fa8c60",
       "transform": {
         "positionMm": [
           0,
@@ -80,7 +92,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "73bc3852cc0b60b8ff437d3207f578cd14015a994f12b18dcca20c0cedf05a88",
+      "shapeHash": "c8b86d541781e01838c64fe8750b49bf2100cb8cbc4abe76fbbf7ee61906d9a0",
       "transform": {
         "positionMm": [
           0,
@@ -106,11 +118,11 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "4f1292eeb0c76d8b9a2175cad52638980c88018a3349ef8aca669ab18367d010",
+      "shapeHash": "4786c73f028688d1ee44295777da5b06f035ed17aa1f239a6cb45d5c8473346e",
       "transform": {
         "positionMm": [
           0,
-          30.9857142857,
+          29.3714285714,
           20.5714285714
         ],
         "rotationDeg": [
@@ -126,10 +138,65 @@
         ]
       },
       "datums": []
+    },
+    {
+      "id": "outer_badge",
+      "target": "front_badge",
+      "label": "Flat-back outer badge",
+      "material": "pla",
+      "kind": "generated",
+      "shapeHash": "6c5cecbecb78a56cb4b0a2174ae8192fdc89fcc163b5ce074edaaf6bdf7453d8",
+      "transform": {
+        "positionMm": [
+          0,
+          -25.7142857143,
+          20.5714285714
+        ],
+        "rotationDeg": [
+          0,
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    },
+    {
+      "id": "center_badge",
+      "target": "front_badge",
+      "label": "Enlarged center button",
+      "material": "pla",
+      "kind": "generated",
+      "shapeHash": "0bd4664993c4efb73611ee5dac914592a8716e0474899c208ec8bd83f261a765",
+      "transform": {
+        "positionMm": [
+          0,
+          -25.7142857143,
+          20.5714285714
+        ],
+        "rotationDeg": [
+          0,
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
     }
   ],
   "assets": [],
-  "updatedAt": "2026-08-28T21:41:57.439Z",
+  "fits": [],
+  "updatedAt": "2026-10-04T11:00:57.461Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,
@@ -153,7 +220,19 @@
       "front_recess_floor_thickness": 0.25,
       "front_recess_floor_overlap": 0.35,
       "front_recess_floor_embed": 0.5,
-      "front_step_relief_clearance": 0.4
+      "front_step_relief_clearance": 0.4,
+      "original_hinge_knuckle_diameter": 6,
+      "original_hinge_knuckle_width": 3.3333333333,
+      "original_hinge_knuckle_spacing": 25,
+      "original_hinge_axis_y": 17,
+      "hinge_external_overlap": 1.5,
+      "front_recess_global_center_z": 20.5714285714,
+      "hinge_external_overlap_v3": 0.5,
+      "front_recess_center_offset_v3": 0,
+      "hinge_side_ear_width_v4": 3.3333333333333335,
+      "hinge_side_center_spacing_v4": 8.333333333333334,
+      "hinge_root_length_v4": 1.2,
+      "hinge_root_embed_v4": 0.2
     },
     "top_lid": {
       "target_chamber_diameter": 45,
@@ -174,11 +253,32 @@
       "hinge_step_relief_width": 63,
       "front_recess_floor_thickness": 0.25,
       "front_recess_floor_embed": 0.5,
-      "front_step_relief_clearance": 0.4
+      "front_step_relief_clearance": 0.4,
+      "front_recess_backfill_depth": 0.3,
+      "original_hinge_knuckle_diameter": 6,
+      "original_hinge_knuckle_width": 10,
+      "original_hinge_center_width": 39.4,
+      "original_hinge_axis_y": 17,
+      "front_recess_center_z": 7.714285714285715,
+      "hinge_external_overlap": 1.5,
+      "front_recess_floor_thickness_v3": 0.6,
+      "front_recess_clearance_v3": 0.35,
+      "hinge_external_overlap_v3": 0.5,
+      "hinge_center_ear_width_v4": 13.133333333333333,
+      "hinge_root_length_v4": 1.2,
+      "hinge_root_embed_v4": 0.2
     },
     "hinge_pin": {
       "hinge_pin_diameter": 3.8571428571,
-      "hinge_pin_length": 39.8571428571
+      "hinge_pin_length": 29.4
+    },
+    "front_badge": {
+      "front_badge_outer_diameter": 15.4285714286,
+      "front_badge_outer_height": 2,
+      "front_badge_center_diameter": 10.5,
+      "front_badge_center_extra_height": 1,
+      "front_badge_outer_edge_radius": 0.62,
+      "front_badge_center_edge_radius": 0.24
     }
   }
 }
