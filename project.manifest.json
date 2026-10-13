@@ -1,8 +1,13 @@
 {
   "formatVersion": 4,
   "name": "核桃收纳盒",
-  "title": "胶囊形翻盖双腔收纳盒",
-  "summary": "一款采用磁铁闭合和外置三节铰链的双腔翻盖收纳盒，适合存放核桃、首饰、药品等小型物品。",
+  "title": "精灵球造型核桃收纳盒",
+  "summary": "经典精灵球黑白红配色，内撑模型可选用 TPU 打印，随时随地收纳你的文玩宝贝",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Miles"
+    }
+  ],
   "artifacts": "rebuild"
 }

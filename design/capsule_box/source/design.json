@@ -58,6 +58,34 @@
         }
       ],
       "dependencies": []
+    },
+    {
+      "id": "top_cavity_liner",
+      "label": "top_cavity_liner",
+      "cells": [
+        {
+          "id": "top_cavity_liner",
+          "target": "top_cavity_liner",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/top_cavity_liner/000-top_cavity_liner.py",
+          "sha256": "fe094070e53f5f3cb37536abdc3f0f9c2e27d3f7e1734e661582be48783f7676"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "bottom_cavity_liner",
+      "label": "bottom_cavity_liner",
+      "cells": [
+        {
+          "id": "bottom_cavity_liner",
+          "target": "bottom_cavity_liner",
+          "order": 0,
+          "path": "design/capsule_box/source/parts/bottom_cavity_liner/000-bottom_cavity_liner.py",
+          "sha256": "9bdca8f52ea864dd73957934c41763a814876edc854f7b8c27f8db7039f9a0c4"
+        }
+      ],
+      "dependencies": []
     }
   ],
   "objects": [
@@ -140,6 +168,33 @@
       "datums": []
     },
     {
+      "id": "center_badge",
+      "target": "front_badge",
+      "label": "Enlarged center button",
+      "material": "pla",
+      "kind": "generated",
+      "shapeHash": "0bd4664993c4efb73611ee5dac914592a8716e0474899c208ec8bd83f261a765",
+      "transform": {
+        "positionMm": [
+          0,
+          -25.7142857143,
+          20.5714285714
+        ],
+        "rotationDeg": [
+          0,
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    },
+    {
       "id": "outer_badge",
       "target": "front_badge",
       "label": "Flat-back outer badge",
@@ -167,17 +222,44 @@
       "datums": []
     },
     {
-      "id": "center_badge",
-      "target": "front_badge",
-      "label": "Enlarged center button",
+      "id": "top_cavity_liner",
+      "target": "top_cavity_liner",
+      "label": "Top cavity liner",
       "material": "pla",
       "kind": "generated",
-      "shapeHash": "0bd4664993c4efb73611ee5dac914592a8716e0474899c208ec8bd83f261a765",
+      "shapeHash": "ad3951d1c056a8b458d109ed4bfafbcb38ceff84567d7ce8bf037f76c415495c",
       "transform": {
         "positionMm": [
+          -26,
+          -58,
+          0
+        ],
+        "rotationDeg": [
           0,
-          -25.7142857143,
-          20.5714285714
+          0,
+          0
+        ],
+        "rotationOrder": "XYZ",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "datums": []
+    },
+    {
+      "id": "bottom_cavity_liner",
+      "target": "bottom_cavity_liner",
+      "label": "Bottom cavity liner",
+      "material": "pla",
+      "kind": "generated",
+      "shapeHash": "efc2d7c84b17599412c37dd4c329cf2a4b4a7fbbdf53de9a96b2b731f7c5cd98",
+      "transform": {
+        "positionMm": [
+          26,
+          -58,
+          0
         ],
         "rotationDeg": [
           0,
@@ -196,7 +278,7 @@
   ],
   "assets": [],
   "fits": [],
-  "updatedAt": "2026-10-04T11:00:57.461Z",
+  "updatedAt": "2026-10-10T21:00:39.351Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,
@@ -279,6 +361,20 @@
       "front_badge_center_extra_height": 1,
       "front_badge_outer_edge_radius": 0.62,
       "front_badge_center_edge_radius": 0.24
+    },
+    "top_cavity_liner": {
+      "top_liner_outer_diameter": 44.5,
+      "top_liner_height": 16,
+      "top_liner_wall_thickness": 1.3,
+      "top_liner_bottom_thickness": 1.7,
+      "top_liner_base_fillet": 0.6
+    },
+    "bottom_cavity_liner": {
+      "bottom_liner_outer_diameter": 44.5,
+      "bottom_liner_height": 16,
+      "bottom_liner_wall_thickness": 1.3,
+      "bottom_liner_bottom_thickness": 1.7,
+      "bottom_liner_base_fillet": 0.6
     }
   }
 }
