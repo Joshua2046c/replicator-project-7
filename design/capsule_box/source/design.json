@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "units": "mm",
-  "coordinateFrame": "replicator-world-z-up",
+  "coordinateFrame": "makit-world-z-up",
   "targets": [
     {
       "id": "bottom_half",
@@ -94,7 +94,7 @@
       "target": "bottom_half",
       "label": "Bottom capsule half",
       "kind": "generated",
-      "shapeHash": "447b9d6892b3c105061342c207c71fa8bcebd251e5342a4b8200b5d863fa8c60",
+      "shapeHash": "d70a6db91321a252f694252dcdea78fab7368b8da088b3c3e5d4116fcab82611",
       "transform": {
         "positionMm": [
           0,
@@ -120,7 +120,7 @@
       "target": "top_lid",
       "label": "Top capsule lid",
       "kind": "generated",
-      "shapeHash": "c8b86d541781e01838c64fe8750b49bf2100cb8cbc4abe76fbbf7ee61906d9a0",
+      "shapeHash": "6d0d68a2bbbcc57027ee51fcb6491e0c4926145b23a0f6e6b5d3afc3633b3a28",
       "transform": {
         "positionMm": [
           0,
@@ -146,7 +146,7 @@
       "target": "hinge_pin",
       "label": "Metal hinge pin",
       "kind": "generated",
-      "shapeHash": "4786c73f028688d1ee44295777da5b06f035ed17aa1f239a6cb45d5c8473346e",
+      "shapeHash": "02d7462fd07e97d7b39bf8b5511677904734815e595a1f0291a337603021438b",
       "transform": {
         "positionMm": [
           0,
@@ -168,12 +168,12 @@
       "datums": []
     },
     {
-      "id": "center_badge",
+      "id": "outer_badge",
       "target": "front_badge",
-      "label": "Enlarged center button",
+      "label": "Flat-back outer badge",
       "material": "pla",
       "kind": "generated",
-      "shapeHash": "0bd4664993c4efb73611ee5dac914592a8716e0474899c208ec8bd83f261a765",
+      "shapeHash": "4c076ee7b97f84297e81f828af3b24fc786938250a06bb30a63b68a899f453ff",
       "transform": {
         "positionMm": [
           0,
@@ -195,12 +195,12 @@
       "datums": []
     },
     {
-      "id": "outer_badge",
+      "id": "center_badge",
       "target": "front_badge",
-      "label": "Flat-back outer badge",
+      "label": "Enlarged center button",
       "material": "pla",
       "kind": "generated",
-      "shapeHash": "6c5cecbecb78a56cb4b0a2174ae8192fdc89fcc163b5ce074edaaf6bdf7453d8",
+      "shapeHash": "6cb27b43a238a4ea8bf28b19b59d34dd11df726662889ec2014b647a6f4489a2",
       "transform": {
         "positionMm": [
           0,
@@ -227,7 +227,7 @@
       "label": "Top cavity liner",
       "material": "pla",
       "kind": "generated",
-      "shapeHash": "ad3951d1c056a8b458d109ed4bfafbcb38ceff84567d7ce8bf037f76c415495c",
+      "shapeHash": "96d430a5c5f531592aedfd9fbf036864decedadeb7639258185e12e49e903cbc",
       "transform": {
         "positionMm": [
           -26,
@@ -254,7 +254,7 @@
       "label": "Bottom cavity liner",
       "material": "pla",
       "kind": "generated",
-      "shapeHash": "efc2d7c84b17599412c37dd4c329cf2a4b4a7fbbdf53de9a96b2b731f7c5cd98",
+      "shapeHash": "b3b64582272cc2de9e5885d6c87d518d1c965a09b40c585f40a01a5cb89c36e5",
       "transform": {
         "positionMm": [
           26,
@@ -278,7 +278,7 @@
   ],
   "assets": [],
   "fits": [],
-  "updatedAt": "2026-10-10T21:00:39.351Z",
+  "updatedAt": "2026-11-07T14:40:49.561Z",
   "parameters": {
     "bottom_half": {
       "target_chamber_diameter": 45,

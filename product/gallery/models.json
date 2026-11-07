@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "models": [
+    {
+      "file": "models/capsule_box.glb",
+      "design": "capsule_box"
+    }
+  ]
+}
