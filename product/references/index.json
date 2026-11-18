@@ -189,6 +189,13 @@
       "bytes": 113934,
       "addedAt": "2026-10-04T10:56:59.794Z",
       "share": false
+    },
+    {
+      "file": "uploads/20261118T092608784Z-1-image.png",
+      "sha256": "02865b946728b8e268d5b8092e3c4194b24397b174001cfd04e5a57329eb2b98",
+      "bytes": 772527,
+      "addedAt": "2026-11-18T09:26:13.818Z",
+      "share": false
     }
   ]
 }

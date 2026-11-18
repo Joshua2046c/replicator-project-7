@@ -1,0 +1,1 @@
+A compact Poké Ball-inspired storage box with two compartments, a magnetic closure, and removable TPU liners. Its rounded, portable design is ideal for storing walnuts, jewelry, medication, and other small items.
